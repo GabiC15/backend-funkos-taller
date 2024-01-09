@@ -12,7 +12,7 @@ export default gql`
   }
 
   extend type Query {
-    productos: [Producto]
+    productos(input: ProductoQueryInput): [Producto]
     producto(id: Int!): Producto
   }
 
@@ -28,5 +28,13 @@ export default gql`
     precio: Float
     stock: Int
     categoria_id: Int
+  }
+
+  input ProductoQueryInput {
+    limite: Int = 20
+    pagina: Int = 1
+    busqueda: String
+    categoriaId: Int
+    subcategoriaId: Int
   }
 `;
