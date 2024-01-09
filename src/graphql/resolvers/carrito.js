@@ -11,7 +11,7 @@ export default {
           {
             model: LineaCarrito,
             as: "lineas_carrito",
-            include: [{ model: Producto, as: "producto" }],
+            include: [{ model: Producto, as: "producto", include: "imagenes" }],
           },
         ],
       }),
