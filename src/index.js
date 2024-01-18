@@ -7,6 +7,7 @@ import express from "express";
 import typeDefs from "./graphql/schemas/index.js";
 import resolvers from "./graphql/resolvers/index.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const server = new ApolloServer({
   typeDefs: typeDefs,
@@ -18,6 +19,7 @@ await server.start();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",

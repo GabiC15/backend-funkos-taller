@@ -11,14 +11,15 @@ export default gql`
     password: String
     fechaNacimiento: Date
     dni: String
-    ciudad: Ciudad!
+    ciudad: Ciudad
     rol: Rol
     carrito: Carrito
   }
 
   extend type Query {
     usuarios: [Usuario]
-    usuario(id: Int!): Usuario
+    usuario: Usuario
+    login: Usuario
   }
 
   extend type Mutation {

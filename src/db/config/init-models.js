@@ -36,14 +36,14 @@ export default function initModels(sequelize) {
     as: "lineas_carrito",
     foreignKey: "carrito_id",
   });
-  usuario.belongsTo(carrito, {
-    as: "carrito_carrito",
-    foreignKey: "carrito_id",
-  });
-  carrito.hasMany(usuario, {
-    as: "carrito_usuarios",
-    foreignKey: "carrito_id",
-  });
+  // usuario.belongsTo(carrito, {
+  //   as: "carrito_carrito",
+  //   foreignKey: "carrito_id",
+  // });
+  // carrito.hasMany(usuario, {
+  //   as: "carrito_usuarios",
+  //   foreignKey: "carrito_id",
+  // });
   categoria.belongsTo(categoria, { as: "padre", foreignKey: "padre_id" });
   categoria.hasMany(categoria, { as: "categoria", foreignKey: "padre_id" });
   producto.belongsTo(categoria, {
