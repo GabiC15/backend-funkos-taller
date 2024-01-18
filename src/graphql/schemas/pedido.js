@@ -26,6 +26,5 @@ export default gql`
     total: Float
     pagado: Boolean
     usuario_id: Int
-    envio_id: Int
   }
 `;
