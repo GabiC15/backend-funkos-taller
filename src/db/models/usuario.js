@@ -58,14 +58,6 @@ export default class Usuario extends Model {
         key: 'id'
       }
     },
-    carrito_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'carrito',
-        key: 'id'
-      }
-    }
   }, {
     sequelize,
     tableName: 'usuario',
