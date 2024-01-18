@@ -40,14 +40,14 @@ export default function initModels(sequelize) {
     as: "lineas_carrito",
     foreignKey: "carrito_id",
   });
-/*   usuario.belongsTo(carrito, {
-    as: "carrito_carrito",
-    foreignKey: "carrito_id",
-  });
-  carrito.hasMany(usuario, {
-    as: "carrito_usuarios",
-    foreignKey: "carrito_id",
-  }); */
+  // usuario.belongsTo(carrito, {
+  //   as: "carrito_carrito",
+  //   foreignKey: "carrito_id",
+  // });
+  // carrito.hasMany(usuario, {
+  //   as: "carrito_usuarios",
+  //   foreignKey: "carrito_id",
+  // });
   categoria.belongsTo(categoria, { as: "padre", foreignKey: "padre_id" });
   categoria.hasMany(categoria, { as: "categoria", foreignKey: "padre_id" });
   producto.belongsTo(categoria, {
@@ -57,8 +57,8 @@ export default function initModels(sequelize) {
   categoria.hasMany(producto, { as: "productos", foreignKey: "categoria_id" });
   usuario.belongsTo(ciudad, { as: "ciudad", foreignKey: "ciudad_id" });
   ciudad.hasMany(usuario, { as: "usuarios", foreignKey: "ciudad_id" });
-  pedido.belongsTo(envio, { as: "envio", foreignKey: "envio_id" });
-  envio.hasMany(pedido, { as: "envio_pedidos", foreignKey: "envio_id" });
+  // pedido.belongsTo(envio, { as: "envio", foreignKey: "envio_id" });
+  // envio.hasMany(pedido, { as: "envio_pedidos", foreignKey: "envio_id" });
   provincia.belongsTo(pais, { as: "pais", foreignKey: "pais_id" });
   pais.hasMany(provincia, { as: "provincia", foreignKey: "pais_id" });
   envio.belongsTo(pedido, { as: "pedido", foreignKey: "pedido_id" });

@@ -1,4 +1,4 @@
-import _sequelize from 'sequelize';
+import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
 export default class Usuario extends Model {
