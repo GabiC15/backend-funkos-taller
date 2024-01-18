@@ -2,7 +2,12 @@ import Valoracion from "../../db/models/valoracion.js";
 
 export default {
   Query: {
-    valoraciones: () => Valoracion.findAll(),
+    valoraciones: (parent, args) =>
+      Valoracion.findAll({
+        where: {
+          producto_id: args.productoId,
+        },
+      }),
     valoracion: (parent, args) => Valoracion.findByPk(args.id),
   },
 

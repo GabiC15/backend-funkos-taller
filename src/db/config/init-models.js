@@ -14,6 +14,8 @@ import _provincia from "../models/provincia.js";
 import _rol from "../models/rol.js";
 import _usuario from "../models/usuario.js";
 import _valoracion from "../models/valoracion.js";
+import _favorito from "../models/favorito.js";
+
 
 export default function initModels(sequelize) {
   const carrito = _carrito.init(sequelize, DataTypes);
@@ -30,20 +32,22 @@ export default function initModels(sequelize) {
   const rol = _rol.init(sequelize, DataTypes);
   const usuario = _usuario.init(sequelize, DataTypes);
   const valoracion = _valoracion.init(sequelize, DataTypes);
+  const favorito = _favorito.init(sequelize, DataTypes);
+
 
   linea_carrito.belongsTo(carrito, { as: "carrito", foreignKey: "carrito_id" });
   carrito.hasMany(linea_carrito, {
     as: "lineas_carrito",
     foreignKey: "carrito_id",
   });
-  usuario.belongsTo(carrito, {
+/*   usuario.belongsTo(carrito, {
     as: "carrito_carrito",
     foreignKey: "carrito_id",
   });
   carrito.hasMany(usuario, {
     as: "carrito_usuarios",
     foreignKey: "carrito_id",
-  });
+  }); */
   categoria.belongsTo(categoria, { as: "padre", foreignKey: "padre_id" });
   categoria.hasMany(categoria, { as: "categoria", foreignKey: "padre_id" });
   producto.belongsTo(categoria, {
@@ -69,6 +73,7 @@ export default function initModels(sequelize) {
     as: "imagenes",
     foreignKey: "producto_id",
   });
+
   item_pedido.belongsTo(producto, {
     as: "producto",
     foreignKey: "producto_id",
@@ -77,6 +82,18 @@ export default function initModels(sequelize) {
     as: "item_pedidos",
     foreignKey: "producto_id",
   });
+  
+  favorito.belongsTo(producto, { as: "producto", foreignKey: "producto_id" });
+  producto.hasMany(favorito, { as: "favoritos", foreignKey: "producto_id" });  
+  favorito.belongsTo(usuario, {
+    as: "usuario",
+    foreignKey: "usuario_id",
+  });
+  usuario.hasMany(favorito, {
+    as: "favoritos",
+    foreignKey: "usuario_id",
+  });
+    
   linea_carrito.belongsTo(producto, {
     as: "producto",
     foreignKey: "producto_id",
@@ -101,6 +118,8 @@ export default function initModels(sequelize) {
   valoracion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(valoracion, { as: "valoraciones", foreignKey: "usuario_id" });
 
+
+
   return {
     carrito,
     categoria,
@@ -116,5 +135,6 @@ export default function initModels(sequelize) {
     rol,
     usuario,
     valoracion,
+    favorito,
   };
 }

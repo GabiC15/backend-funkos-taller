@@ -12,6 +12,7 @@ import provinciaResolver from "./provincia.js";
 import rolResolver from "./rol.js";
 import usuarioResolver from "./usuario.js";
 import valoracionResolver from "./valoracion.js";
+import favoritoResolver from "./favorito.js";
 
 export default [
   carritoResolver,
@@ -27,5 +28,6 @@ export default [
   provinciaResolver,
   rolResolver,
   usuarioResolver,
-  valoracionResolver
+  valoracionResolver,
+  favoritoResolver
 ];
