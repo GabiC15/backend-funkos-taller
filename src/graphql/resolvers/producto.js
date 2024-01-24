@@ -36,7 +36,7 @@ export default {
       });
     },
     producto: async (_, args) => {
-      return Producto.findByPk(args.id, {
+      return Producto.findByPk(args.id, { 
         include: [
           {
             model: Categoria,
