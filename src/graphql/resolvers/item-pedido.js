@@ -1,10 +1,42 @@
 import ItemPedido from "./../../db/models/item_pedido.js";
+import Producto from "./../../db/models/producto.js";
 
 export default {
   Query: {
     itemPedidos: () => ItemPedido.findAll(),
     itemPedido: (parent, args) =>
       ItemPedido.findByPk(args.id, { include: "producto" }),
+    itemsMasPedidos: async () => {
+      const items = await ItemPedido.findAll({
+        include: [
+          {
+            model: Producto,
+            as: "producto",
+            attributes: ["titulo"],
+          },
+        ],
+      });
+
+      const itemsCount = items.reduce((acc, item) => {
+        const productoId = item.dataValues.producto_id;
+        const titulo = item.dataValues.producto.titulo;
+
+        if (!acc[productoId]) {
+          acc[productoId] = { productoId, productoTitulo: titulo, cantidad: 0 };
+        }
+        acc[productoId].cantidad += item.cantidad;
+        return acc;
+      }, {});
+
+      return Object.entries(itemsCount)
+        .sort((a, b) => a[1].cantidad - b[1].cantidad)
+        .map(([productoId, { productoTitulo, cantidad }]) => ({
+          productoId,
+          productoTitulo,
+          cantidad,
+        }))
+        .slice(-5);
+    },
   },
 
   Mutation: {

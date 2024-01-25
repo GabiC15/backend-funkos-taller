@@ -10,9 +10,17 @@ export default gql`
     envio: Envio
   }
 
+  type YearlySales {
+  year: String
+  total: Int
+}
+
   extend type Query {
     pedidos: [Pedido]
     pedido(id: Int!): Pedido
+    totalPedidosPagos: Int
+    totalVentasPorAnio(startYear: Int, endYear: Int): [YearlySales]
+    totalPedidos: Int
   }
 
   extend type Mutation {

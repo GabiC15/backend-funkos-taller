@@ -5,6 +5,7 @@ import { Op } from "sequelize";
 
 export default {
   Query: {
+    totalProductos: () => Producto.findAndCountAll().then((result) => result.count),
     productos: (
       _,
       { input: { limite, pagina, busqueda, categoriaId, subcategoriaId } }

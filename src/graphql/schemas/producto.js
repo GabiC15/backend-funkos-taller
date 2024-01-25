@@ -14,7 +14,8 @@ export default gql`
 
   extend type Query {
     productos(input: ProductoQueryInput): [Producto]
-    producto(id: Int!): Producto
+    producto(id: Int!): Producto,
+    totalProductos: Int
   }
 
   extend type Mutation {

@@ -5,6 +5,8 @@ export default {
   Query: {
     usuarios: () => Usuario.findAll(),
     usuario: (parent, args) => Usuario.findByPk(args.id),
+    totalUsuarios: () =>
+      Usuario.findAndCountAll().then((result) => result.count),
   },
 
   Mutation: {

@@ -19,6 +19,7 @@ export default gql`
   extend type Query {
     usuarios: [Usuario]
     usuario(id: Int!): Usuario
+    totalUsuarios: Int
   }
 
   extend type Mutation {
