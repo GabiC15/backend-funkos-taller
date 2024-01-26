@@ -14,10 +14,19 @@ export default gql`
     cantidad: Int
   }
 
+  type VolumenItemsPedidos {
+    productoId: Int
+    productoTitulo: String
+    cantidadItem: Int,
+    cantidadTotal: Int
+  }
+
   extend type Query {
     itemPedidos: [ItemPedido]
     itemPedido(id: Int!): ItemPedido
     itemsMasPedidos: [ItemsMasPedidos]
+    volumenItemsPedidos: [VolumenItemsPedidos]
+
   }
 
   extend type Mutation {

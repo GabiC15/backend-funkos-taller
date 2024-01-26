@@ -37,8 +37,45 @@ export default {
         }))
         .slice(-5);
     },
+    volumenItemsPedidos: async () => {
+      const items = await ItemPedido.findAll({
+        include: [
+          {
+            model: Producto,
+            as: "producto",
+            attributes: ["titulo"],
+          },
+        ],
+      });
+
+      let cantidadTotal = 0;
+  
+      const itemsCount = items.reduce((acc, item) => {
+        const productoId = item.dataValues.producto_id;
+        const titulo = item.dataValues.producto.titulo;
+        cantidadTotal += item.dataValues.cantidad;
+
+        if (!acc[productoId]) {
+          acc[productoId] = { productoId, productoTitulo: titulo, cantidadItem: 0 };
+        }
+        acc[productoId].cantidadItem += item.cantidad;
+        
+        return acc;
+      }, {});
+  
+      return Object.entries(itemsCount)
+        .sort((a, b) => b[1].cantidadItem - a[1].cantidadItem)
+        .map(([productoId, { productoTitulo, cantidadItem }]) => ({
+          productoId,
+          productoTitulo,
+          cantidadItem,
+          cantidadTotal,
+        }));
+    },
   },
 
+
+  
   Mutation: {
     createItemPedido: (parent, args) => ItemPedido.create(args.input),
     updateItemPedido: async (parent, args) => {
