@@ -10,13 +10,18 @@ export default {
       const decodedToken = await getAuth().verifyIdToken(token);
       const usuario = await Usuario.findOne({
         where: { auth_id: decodedToken.uid },
+        include: "rol",
       });
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
+      getAuth().setCustomUserClaims(decodedToken.uid, {
+        id: usuario.id,
+        rol: usuario.rol.nombre,
+      });
       const sessionCookie = await getAuth().createSessionCookie(token, {
         expiresIn,
       });
-      res.cookie("cookie", sessionCookie, {
+      res.cookie("session", sessionCookie, {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
@@ -24,13 +29,9 @@ export default {
 
       return usuario;
     },
-    usuario: async (parent, args, { req, res }) => {
-      const { cookie } = req.cookies;
-
-      const decodedCookie = await getAuth().verifySessionCookie(cookie);
-
+    usuario: async (parent, args, { req }) => {
       const usuario = await Usuario.findOne({
-        where: { auth_id: decodedCookie.uid },
+        where: { authId: req.usuario.uid },
       });
 
       return usuario;
@@ -41,19 +42,27 @@ export default {
     createUsuario: async (parent, args, { req, res }) => {
       const bearerToken = req.headers.authorization;
       const token = bearerToken.substring(7, bearerToken.length);
-      // const usuario = await Usuario.create({ ...args.input });
+      const decodedToken = await getAuth().verifyIdToken(token);
+      const usuario = await Usuario.create({
+        ...args.input,
+        authId: decodedToken.uid,
+      });
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
+      getAuth().setCustomUserClaims(decodedToken.uid, {
+        id: usuario.id,
+        rol: "CLIENT",
+      });
       const sessionCookie = await getAuth().createSessionCookie(token, {
         expiresIn,
       });
-      res.cookie("cookie", sessionCookie, {
+      res.cookie("session", sessionCookie, {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
       });
 
-      return { id: 40 };
+      return usuario;
     },
     updateUsuario: (parent, args) =>
       Usuario.update(args.input, { where: { id: args.id } }),

@@ -43,6 +43,11 @@ export default class Usuario extends Model {
           type: DataTypes.STRING(9),
           allowNull: true,
         },
+        authId: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          field: "auth_id",
+        },
         ciudad_id: {
           type: DataTypes.BIGINT,
           allowNull: true,
