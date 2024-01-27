@@ -15,11 +15,18 @@ export default gql`
   total: Int
 }
 
+  type MonthlySales {
+    month: String
+    brutto: Int
+    commission: Int
+  }
+
   extend type Query {
     pedidos: [Pedido]
     pedido(id: Int!): Pedido
     totalPedidosPagos: Int
-    totalVentasPorAnio(startYear: Int, endYear: Int): [YearlySales]
+    totalVentasPorAnio(input: VentasPorAnioInput!): [YearlySales]
+    totalVentasPorMes(year: Int): [MonthlySales]
     totalPedidos: Int
   }
 
@@ -35,4 +42,11 @@ export default gql`
     pagado: Boolean
     usuario_id: Int
   }
+
+  input VentasPorAnioInput {
+    startYear: Int!
+    endYear: Int!
+  }
+
 `;
+

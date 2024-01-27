@@ -10,9 +10,19 @@ export default gql`
     pedido: Pedido
   }
 
+  type ControlDeEnvios {
+    id: Int
+    costo: Float
+    entregado: Boolean
+    fecha: Date
+    usuarioId: Int
+    pedido: Pedido
+  }
+
   extend type Query {
     envios: [Envio]
     envio(id: Int!): Envio
+    controlDeEnvios: [ControlDeEnvios]
   }
 
   extend type Mutation {
