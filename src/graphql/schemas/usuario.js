@@ -11,7 +11,7 @@ export default gql`
     password: String
     fechaNacimiento: Date
     dni: String
-    ciudad: Ciudad!
+    ciudad: Ciudad
     rol: Rol
     carrito: Carrito
   }
@@ -20,6 +20,8 @@ export default gql`
     usuarios: [Usuario]
     usuario(id: Int!): Usuario
     totalUsuarios: Int
+    usuario: Usuario
+    login: Usuario
   }
 
   extend type Mutation {
