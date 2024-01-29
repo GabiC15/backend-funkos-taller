@@ -7,6 +7,9 @@ import express from "express";
 import typeDefs from "./graphql/schemas/index.js";
 import resolvers from "./graphql/resolvers/index.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import userMiddleware from "./middlewares/user.js";
+import authMiddleware from "./middlewares/auth.js";
 
 const server = new ApolloServer({
   typeDefs: typeDefs,
@@ -18,6 +21,7 @@ await server.start();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -27,6 +31,8 @@ app.use(
 
 app.use(
   "/graphql",
+  userMiddleware,
+  authMiddleware,
   expressMiddleware(server, {
     context: async ({ req, res }) => {
       return { req, res };
