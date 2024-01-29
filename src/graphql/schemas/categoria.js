@@ -10,5 +10,7 @@ export default gql`
   extend type Query {
     categorias: [Categoria]
     categoria(id: Int!): Categoria
+    subcategorias(categoriaId: Int!): [Categoria]
+
   }
 `;

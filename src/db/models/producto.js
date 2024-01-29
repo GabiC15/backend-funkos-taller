@@ -26,7 +26,8 @@ export default class Producto extends Model {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    categoria_id: {
+    categoriaId: {
+      field: 'categoria_id',
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {

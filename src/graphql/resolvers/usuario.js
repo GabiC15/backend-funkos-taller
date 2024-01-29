@@ -4,6 +4,10 @@ import { getAuth } from "firebase-admin/auth";
 export default {
   Query: {
     usuarios: () => Usuario.findAll(),
+    usuario: (parent, args) => Usuario.findByPk(args.id),
+    totalUsuarios: () =>
+      Usuario.findAndCountAll().then((result) => result.count),
+
     login: async (parent, args, { req, res }) => {
       const bearerToken = req.headers.authorization;
       const token = bearerToken.substring(7, bearerToken.length);

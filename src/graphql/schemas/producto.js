@@ -11,9 +11,11 @@ export default gql`
     imagenes: [ImagenProducto]
   }
 
+
   extend type Query {
     productos(input: ProductoQueryInput): [Producto]
-    producto(id: Int!): Producto
+    producto(id: Int!): Producto,
+    totalProductos: Int
   }
 
   extend type Mutation {
@@ -27,7 +29,7 @@ export default gql`
     descripcion: String
     precio: Float
     stock: Int
-    categoria_id: Int
+    categoriaId: Int
   }
 
   input ProductoQueryInput {

@@ -18,6 +18,8 @@ export default gql`
 
   extend type Query {
     usuarios: [Usuario]
+    usuario(id: Int!): Usuario
+    totalUsuarios: Int
     usuario: Usuario
     login: Usuario
   }
