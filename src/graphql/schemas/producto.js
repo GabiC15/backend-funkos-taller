@@ -11,10 +11,15 @@ export default gql`
     imagenes: [ImagenProducto]
   }
 
+  type maxProductoId {
+    maxId: Int!
+  }
+
 
   extend type Query {
     productos(input: ProductoQueryInput): [Producto]
     producto(id: Int!): Producto
+    maxProductoId: maxProductoId
   }
 
   extend type Mutation {

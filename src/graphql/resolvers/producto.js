@@ -1,4 +1,5 @@
 import Producto from "./../../db/models/producto.js";
+import Sequelize from "sequelize";
 import Categoria from "./../../db/models/categoria.js";
 import ImagenProducto from "./../../db/models/imagen_producto.js";
 import { Op } from "sequelize";
@@ -36,7 +37,7 @@ export default {
       });
     },
     producto: async (_, args) => {
-      return Producto.findByPk(args.id, { 
+      return Producto.findByPk(args.id, {
         include: [
           {
             model: Categoria,
@@ -52,6 +53,12 @@ export default {
           },
         ],
       });
+    },
+    maxProductoId: async () => {
+      const prodId = await Producto.findOne({
+        attributes: [[Sequelize.fn("max", Sequelize.col("id")), "maxId"]],
+      });
+      return prodId.dataValues;
     },
   },
 
