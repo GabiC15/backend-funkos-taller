@@ -32,7 +32,7 @@ app.use(
 app.use(
   "/graphql",
   userMiddleware,
-  authMiddleware,
+  // authMiddleware,
   expressMiddleware(server, {
     context: async ({ req, res }) => {
       return { req, res };

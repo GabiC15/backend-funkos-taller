@@ -27,6 +27,8 @@ export const operationsRoles = {
   login: ["CLIENT", "ADMIN"],
   valoraciones: ["CLIENT", "ADMIN"],
   valoracion: ["CLIENT", "ADMIN"],
+  notificaciones: ["CLIENT", "ADMIN"],
+  notificacion: ["CLIENT", "ADMIN"],
 
   // Mutations
   createCarrito: ["CLIENT", "ADMIN"],
@@ -56,4 +58,7 @@ export const operationsRoles = {
   createValoracion: ["CLIENT", "ADMIN"],
   updateValoracion: ["CLIENT", "ADMIN"],
   deleteValoracion: ["CLIENT", "ADMIN"],
+  createNotificacion: ["CLIENT", "ADMIN"],
+  updateNotificacion: ["CLIENT", "ADMIN"],
+  deleteNotificacion: ["CLIENT", "ADMIN"],
 };

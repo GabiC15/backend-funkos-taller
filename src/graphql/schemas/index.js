@@ -15,6 +15,7 @@ import rolTypes from "./rol.js";
 import usuarioTypes from "./usuario.js";
 import valoracionTypes from "./valoracion.js";
 import favoritoTypes from "./favorito.js";
+import notificationTypes from "./notificacion.js";
 
 const typeDef = gql`
   type Query {
@@ -42,5 +43,6 @@ export default [
   rolTypes,
   usuarioTypes,
   valoracionTypes,
-  favoritoTypes
+  favoritoTypes,
+  notificationTypes
 ];
