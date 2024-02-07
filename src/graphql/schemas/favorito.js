@@ -9,6 +9,7 @@ export default gql`
 
   extend type Query {
     favoritos: [Favorito]
+    favorito(productoId: Int!): Favorito
   }
 
   extend type Mutation {
