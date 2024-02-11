@@ -3,11 +3,19 @@ import gql from "graphql-tag";
 export default gql`
   type Pedido {
     id: Int!
-    fecha: Date
+    fecha: String
     total: Float
     pagado: Boolean
     usuario: Usuario
     envio: Envio
+    pago: Pago
+    cupon: Cupon
+    itemsPedido: [ItemPedido]
+  }
+
+  type PedidoCreateResponse {
+    pedidoId: Int!
+    checkoutUrl: String!
   }
 
   type YearlySales {
@@ -31,16 +39,23 @@ export default gql`
   }
 
   extend type Mutation {
-    createPedido(input: PedidoInput!): Pedido
+    createPedido(input: PedidoInput!): PedidoCreateResponse
     updatePedido(id: Int!, input: PedidoInput!): Pedido
     deletePedido(id: Int!): Boolean
   }
 
   input PedidoInput {
-    fecha: String
-    total: Float
-    pagado: Boolean
-    usuario_id: Int
+    envio: EnvioPedidoInput
+    cuponId: Int
+  }
+
+  input EnvioPedidoInput {
+    codigoPostal: Int!
+    provinciaId: Int!
+    ciudad: String!
+    calle: String!
+    numero: Int!
+    piso: Int
   }
 
   input VentasPorAnioInput {

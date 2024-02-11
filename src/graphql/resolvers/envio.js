@@ -1,6 +1,7 @@
 import Envio from "./../../db/models/envio.js";
 import Pedido from "./../../db/models/pedido.js";
 import Usuario from "./../../db/models/usuario.js";
+import { getPrecioEnvio } from "../../utils/get-precio-envio.js";
 
 export default {
   Query: {
@@ -25,8 +26,16 @@ export default {
           },
         ],
       }),
+    precioEnvio: async (parent, args) => {
+      const { codigoPostalDestino, provinciaIdDestino } = args.input;
+      const precio = getPrecioEnvio({
+        codigoPostalDestino,
+        provinciaIdDestino,
+      });
+
+      return precio;
+    },
   },
-  
 
   Mutation: {
     createEnvio: (parent, args) => Envio.create(args.input),

@@ -4,6 +4,7 @@ export default gql`
   type ItemPedido {
     id: Int!
     cantidad: Int
+    precioProducto: Float
     pedido: Pedido
     producto: Producto
   }

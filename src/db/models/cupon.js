@@ -1,7 +1,7 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class Favorito extends Model {
+export default class Cupon extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -11,33 +11,38 @@ export default class Favorito extends Model {
           allowNull: false,
           primaryKey: true,
         },
-        usuarioId: {
+        nombre: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        porcentaje: {
           type: DataTypes.INTEGER,
-          field: "usuario_id",
-          allowNull: true,
-          references: {
-            model: "usuario",
-            key: "id",
+          allowNull: false,
+          validate: {
+            max: 100,
+            min: 0,
           },
         },
-        productoId: {
-          type: DataTypes.INTEGER,
-          field: "producto_id",
-          allowNull: true,
-          references: {
-            model: "producto",
-            key: "id",
-          },
+        validoDesde: {
+          type: DataTypes.DATEONLY,
+          field: "valido_desde",
+          allowNull: false,
+        },
+        validoHasta: {
+          type: DataTypes.DATEONLY,
+          field: "valido_hasta",
+          allowNull: false,
         },
       },
       {
         sequelize,
-        tableName: "favorito",
+        tableName: "cupon",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "favorito_pkey",
+            name: "cupon_pkey",
             unique: true,
             fields: [{ name: "id" }],
           },

@@ -10,18 +10,18 @@ export default gql`
 
   extend type Query {
     lineasCarrito: [LineaCarrito]
-    lineaCarrito(id: Int!): LineaCarrito
+    lineaCarrito(productoId: Int!): LineaCarrito
   }
 
   extend type Mutation {
     createLineaCarrito(input: LineaCarritoInput!): LineaCarrito
     updateLineaCarrito(id: Int!, input: LineaCarritoInput!): LineaCarrito
-    deleteLineaCarrito(id: Int!): Boolean
+    deleteLineaCarrito(productoId: Int!): Boolean
+    deleteLineasCarrito: Boolean
   }
 
   input LineaCarritoInput {
     cantidad: Int
-    carrito_id: Int
-    producto_id: Int
+    productoId: Int
   }
 `;
