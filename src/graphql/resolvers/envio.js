@@ -1,9 +1,19 @@
 import Envio from "./../../db/models/envio.js";
+import { getPrecioEnvio } from "../../utils/get-precio-envio.js";
 
 export default {
   Query: {
     envios: () => Envio.findAll(),
     envio: (parent, args) => Envio.findByPk(args.id, { include: "pedido" }),
+    precioEnvio: async (parent, args) => {
+      const { codigoPostalDestino, provinciaIdDestino } = args.input;
+      const precio = getPrecioEnvio({
+        codigoPostalDestino,
+        provinciaIdDestino,
+      });
+
+      return precio;
+    },
   },
 
   Mutation: {

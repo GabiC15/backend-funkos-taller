@@ -8,11 +8,20 @@ export default {
           producto_id: args.productoId,
         },
       }),
-    valoracion: (parent, args) => Valoracion.findByPk(args.id),
+    valoracion: (parent, args) =>
+      Valoracion.findOne({
+        where: {
+          productoId: args.productoId,
+        },
+      }),
   },
 
   Mutation: {
-    createValoracion: (parent, args) => Valoracion.create(args.input),
+    createValoracion: (parent, args, { req }) =>
+      Valoracion.create({
+        ...args.input,
+        usuarioId: req.usuario.id,
+      }),
     updateValoracion: (parent, args) =>
       Valoracion.update(args.input, { where: { id: args.id } }),
     deleteValoracion: (parent, args) =>
