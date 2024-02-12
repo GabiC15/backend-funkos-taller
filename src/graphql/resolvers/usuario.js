@@ -29,6 +29,7 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
+        domain: ".frontend-funkos-taller.vercel.app",
       });
 
       return usuario;
