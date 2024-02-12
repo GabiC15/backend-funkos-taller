@@ -26,10 +26,10 @@ export default {
         expiresIn,
       });
       res.cookie("session", sessionCookie, {
-        httpOnly: true,
-        secure: true,
+        // httpOnly: true,
+        // secure: true,
         expires: new Date(Date.now() + expiresIn),
-        domain: ".frontend-funkos-taller.vercel.app",
+        domain: "",
       });
 
       return usuario;
