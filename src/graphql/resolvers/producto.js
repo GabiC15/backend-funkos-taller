@@ -3,30 +3,47 @@ import Categoria from "./../../db/models/categoria.js";
 import ImagenProducto from "./../../db/models/imagen_producto.js";
 import { Op } from "sequelize";
 
+const orderEnum = {
+  RECIENTES: ["id", "ASC"],
+  PRECIO_DESC: ["precio", "DESC"],
+  PRECIO_ASC: ["precio", "ASC"],
+};
+
 export default {
   Query: {
-    totalProductos: () => Producto.findAndCountAll().then((result) => result.count),
+    totalProductos: () =>
+      Producto.findAndCountAll().then((result) => result.count),
     productos: (
       _,
-      { input: { limite, pagina, busqueda, categoriaId, subcategoriaId } }
+      {
+        input: {
+          limite,
+          pagina,
+          busqueda,
+          order,
+          categoriaId,
+          subcategoriaId,
+          precioMaximo,
+          precioMinimo,
+        },
+      }
     ) => {
       return Producto.findAll({
         limit: limite,
         offset: limite * (pagina - 1),
-        where: {
-          ...(busqueda ? { titulo: { [Op.like]: `%${busqueda}%` } } : {}),
-          ...(subcategoriaId ? { categoria_id: subcategoriaId } : {}),
-        },
+        order: order && [orderEnum[order]],
+        where: [
+          ...(busqueda ? [{ titulo: { [Op.iLike]: `%${busqueda}%` } }] : []),
+          ...(subcategoriaId ? [{ categoria_id: subcategoriaId }] : []),
+          ...(precioMinimo ? [{ precio: { [Op.gte]: precioMinimo } }] : []),
+          ...(precioMaximo ? [{ precio: { [Op.lte]: precioMaximo } }] : []),
+        ],
         include: [
           {
             model: Categoria,
             as: "categoria",
-            include: {
-              model: Categoria,
-              as: "padre",
-              where: categoriaId && {
-                id: categoriaId,
-              },
+            where: categoriaId && {
+              padre_id: categoriaId,
             },
           },
           {
@@ -37,7 +54,7 @@ export default {
       });
     },
     producto: async (_, args) => {
-      return Producto.findByPk(args.id, { 
+      return Producto.findByPk(args.id, {
         include: [
           {
             model: Categoria,
