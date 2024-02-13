@@ -4,7 +4,7 @@ export default gql`
   type Valoracion {
     id: Int!
     texto: String
-    fecha: Date
+    fecha: String
     cantidadEstrellas: Int
     producto: Producto
     usuario: Usuario
@@ -12,7 +12,7 @@ export default gql`
 
   extend type Query {
     valoraciones(productoId: Int): [Valoracion]
-    valoracion(id: Int!): Valoracion
+    valoracion(productoId: Int!): Valoracion
   }
 
   extend type Mutation {
@@ -22,10 +22,8 @@ export default gql`
   }
 
   input ValoracionInput {
-    texto: String
-    fecha: String
-    cantidadEstrellas: Int
-    producto_id: Int
-    usuario_id: Int
+    productoId: Int!
+    texto: String!
+    cantidadEstrellas: Int!
   }
 `;

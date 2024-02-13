@@ -6,6 +6,7 @@ import { Op } from "sequelize";
 
 export default {
   Query: {
+    totalProductos: () => Producto.findAndCountAll().then((result) => result.count),
     productos: (
       _,
       { input: { limite, pagina, busqueda, categoriaId, subcategoriaId } }
@@ -54,12 +55,12 @@ export default {
         ],
       });
     },
-    maxProductoId: async () => {
-      const prodId = await Producto.findOne({
-        attributes: [[Sequelize.fn("max", Sequelize.col("id")), "maxId"]],
-      });
-      return prodId.dataValues;
-    },
+    // maxProductoId: async () => {
+    //   const prodId = await Producto.findOne({
+    //     attributes: [[Sequelize.fn("max", Sequelize.col("id")), "maxId"]],
+    //   });
+    //   return prodId.dataValues;
+    // },
   },
 
   Mutation: {

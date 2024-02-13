@@ -3,6 +3,9 @@ import gql from "graphql-tag";
 export default gql`
   type Envio {
     id: Int!
+    codigoPostal: String
+    provincia: Provincia
+    ciudad: String
     direccion: String
     costo: Float
     entregado: Boolean
@@ -10,9 +13,20 @@ export default gql`
     pedido: Pedido
   }
 
+  type ControlDeEnvios {
+    id: Int
+    costo: Float
+    entregado: Boolean
+    fecha: Date
+    usuarioId: Int
+    pedido: Pedido
+  }
+
   extend type Query {
     envios: [Envio]
     envio(id: Int!): Envio
+    controlDeEnvios: [ControlDeEnvios]
+    precioEnvio(input: PrecioEnvioInput!): Float
   }
 
   extend type Mutation {
@@ -27,5 +41,10 @@ export default gql`
     entregado: Boolean
     codigoSeguimiento: String
     pedido_id: Int
+  }
+
+  input PrecioEnvioInput {
+    codigoPostalDestino: Int!
+    provinciaIdDestino: Int!
   }
 `;

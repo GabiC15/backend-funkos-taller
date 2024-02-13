@@ -1,3 +1,4 @@
+import Cupon from "../../db/models/cupon.js";
 import LineaCarrito from "../../db/models/linea_carrito.js";
 import Producto from "../../db/models/producto.js";
 import Carrito from "./../../db/models/carrito.js";
@@ -15,6 +16,32 @@ export default {
           },
         ],
       }),
+
+    totalCarrito: async (parent, args, { req }) => {
+      const lineasCarrito = await LineaCarrito.findAll({
+        where: {
+          carritoId: req.usuario.id,
+        },
+        include: "producto",
+      });
+
+      const subtotal = lineasCarrito
+        .map((lc) => lc.cantidad * lc.producto.precio)
+        .reduce((acc, cur) => acc + cur);
+
+      let descuento = 0;
+      if (args.cuponId) {
+        const cupon = await Cupon.findByPk(args.cuponId);
+
+        descuento = (cupon.porcentaje / 100) * subtotal;
+      }
+
+      return {
+        descuento,
+        subtotal,
+        total: subtotal - descuento,
+      };
+    },
   },
 
   Mutation: {

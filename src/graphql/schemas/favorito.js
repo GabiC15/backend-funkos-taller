@@ -9,16 +9,11 @@ export default gql`
 
   extend type Query {
     favoritos: [Favorito]
+    favorito(productoId: Int!): Favorito
   }
 
   extend type Mutation {
-    createFavorito(input: FavoritoInput!): Favorito
-    deleteFavorito(id: Int!): Boolean
-  }
-
-  input FavoritoInput {
-    id: Int
-    usuario_id: Int
-    producto_id: Int
+    createFavorito(productoId: Int!): Favorito
+    deleteFavorito(productoId: Int!): Boolean
   }
 `;
