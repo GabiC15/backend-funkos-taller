@@ -1,9 +1,7 @@
 import { getAuth } from "firebase-admin/auth";
 
 const userMiddleware = async (req, _, next) => {
-  const { session } = req.cookies;
-
-  console.log(session);
+  const { session } = req.cookies || req.headers;
 
   if (session) {
     const decodedCookie = await getAuth().verifySessionCookie(session);
