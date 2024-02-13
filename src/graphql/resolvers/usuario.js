@@ -29,7 +29,7 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
-        SameSite: "None",
+        sameSite: "none",
       });
 
       return usuario;
@@ -65,7 +65,7 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
-        SameSite: "None",
+        sameSite: "none",
       });
 
       return usuario;
