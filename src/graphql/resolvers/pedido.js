@@ -165,9 +165,9 @@ export default {
           body: {
             statement_descriptor: "FunkoPlanet",
             back_urls: {
-              failure: `http://localhost:3000/usuario/historial/${pedido.id}`,
-              success: `http://localhost:3000/usuario/historial/${pedido.id}`,
-              pending: `http://localhost:3000/usuario/historial/${pedido.id}`,
+              failure: `${process.env.FRONTEND_URL}/usuario/historial/${pedido.id}`,
+              success: `${process.env.FRONTEND_URL}/usuario/historial/${pedido.id}`,
+              pending: `${process.env.FRONTEND_URL}/usuario/historial/${pedido.id}`,
             },
             external_reference: `${pedido.id}`,
             shipments: envio && {
