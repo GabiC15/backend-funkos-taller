@@ -11,10 +11,9 @@ export default gql`
     imagenes: [ImagenProducto]
   }
 
-
   extend type Query {
     productos(input: ProductoQueryInput): [Producto]
-    producto(id: Int!): Producto,
+    producto(id: Int!): Producto
     totalProductos: Int
   }
 
@@ -36,6 +35,9 @@ export default gql`
     limite: Int = 20
     pagina: Int = 1
     busqueda: String
+    order: String
+    precioMaximo: Float
+    precioMinimo: Float
     categoriaId: Int
     subcategoriaId: Int
   }
