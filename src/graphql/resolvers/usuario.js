@@ -32,6 +32,7 @@ export default {
         secure: true,
         expires: new Date(Date.now() + expiresIn),
         sameSite: "none",
+        domain: ".funkoplanet.online",
       });
 
       return usuario;
@@ -68,6 +69,7 @@ export default {
         secure: true,
         expires: new Date(Date.now() + expiresIn),
         sameSite: "none",
+        domain: ".funkoplanet.online",
       });
 
       return usuario;
