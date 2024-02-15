@@ -14,6 +14,7 @@ export default {
 
   Mutation: {
     createCupon: (parent, args) => Cupon.create(args.input),
+    updateCupon: (parent, args) => Cupon.update(args.input, { where: { id: args.id } }),
     deleteCupon: (parent, args) => Cupon.destroy({ where: { id: args.id } }),
   },
 };
