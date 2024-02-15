@@ -17,6 +17,7 @@ export default gql`
 
   extend type Mutation {
     createCupon(input: CuponInput!): Cupon
+    updateCupon(id: Int!, input: CuponInput!): Cupon
     deleteCupon(id: Int!): Boolean
   }
 
