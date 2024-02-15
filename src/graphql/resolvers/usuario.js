@@ -17,6 +17,8 @@ export default {
         include: "rol",
       });
 
+      if (!usuario) return null;
+
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
       getAuth().setCustomUserClaims(decodedToken.uid, {
         id: usuario.id,
@@ -29,13 +31,15 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
+        sameSite: "none",
+        domain: ".funkoplanet.online",
       });
 
       return usuario;
     },
     usuario: async (parent, args, { req }) => {
       const usuario = await Usuario.findOne({
-        where: { authId: req.usuario.uid },
+        where: { id: req.usuario.id },
       });
 
       return usuario;
@@ -64,6 +68,8 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
+        sameSite: "none",
+        domain: ".funkoplanet.online",
       });
 
       return usuario;
@@ -72,5 +78,10 @@ export default {
       Usuario.update(args.input, { where: { id: args.id } }),
     deleteUsuario: (parent, args) =>
       Usuario.destroy({ where: { id: args.id } }),
+    logout: (parent, args, { res }) => {
+      res.clearCookie("session");
+
+      return true;
+    },
   },
 };
