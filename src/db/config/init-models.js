@@ -116,7 +116,7 @@ export default function initModels(sequelize) {
   carrito.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(carrito, { as: "carritos", foreignKey: "usuario_id" });
   pedido.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
-  usuario.hasMany(pedido, { as: "pedidos", foreignKey: "usuario_id" });
+  usuario.hasOne(pedido, { as: "pedido", foreignKey: "usuario_id" });
   valoracion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(valoracion, { as: "valoraciones", foreignKey: "usuario_id" });
   cupon.hasMany(pedido, { as: "pedido", foreignKey: "cupon_id" });

@@ -4,8 +4,11 @@ import Favorito from "./../../db/models/favorito.js";
 
 export default {
   Query: {
-    favoritos: () =>
+    favoritos: (parent, args, { req }) =>
       Favorito.findAll({
+        where: {
+          usuarioId: req.usuario.id,
+        },
         include: [
           "usuario",
           {
