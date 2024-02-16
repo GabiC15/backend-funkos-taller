@@ -126,11 +126,11 @@ export default function initModels(sequelize) {
   // notificacion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   // usuario.hasMany(notificacion, { as: "notificaciones", foreignKey: "usuario_id" });
 
-  notificacion.belongsTo(usuario, { as: "usuario", foreignKey: "usuarioId" });
-  usuario.hasMany(notificacion, {
-    as: "notificaciones",
-    foreignKey: "usuarioId",
-  });
+  // notificacion.belongsTo(usuario, { as: "usuario", foreignKey: "usuarioId" });
+  // usuario.hasMany(notificacion, {
+  //   as: "notificaciones",
+  //   foreignKey: "usuarioId",
+  // });
   notificacion.belongsTo(pedido, { as: "pedido", foreignKey: "pedidoId" });
   pedido.hasMany(notificacion, {
     as: "notificaciones",
