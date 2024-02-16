@@ -15,6 +15,7 @@ import _rol from "../models/rol.js";
 import _usuario from "../models/usuario.js";
 import _valoracion from "../models/valoracion.js";
 import _favorito from "../models/favorito.js";
+import _notificacion from "../models/notificacion.js";
 import _cupon from "../models/cupon.js";
 import _pago from "../models/pago.js";
 
@@ -34,6 +35,8 @@ export default function initModels(sequelize) {
   const usuario = _usuario.init(sequelize, DataTypes);
   const valoracion = _valoracion.init(sequelize, DataTypes);
   const favorito = _favorito.init(sequelize, DataTypes);
+  const notificacion = _notificacion.init(sequelize, DataTypes);
+
   const cupon = _cupon.init(sequelize, DataTypes);
   const pago = _pago.init(sequelize, DataTypes);
 
@@ -119,6 +122,43 @@ export default function initModels(sequelize) {
   usuario.hasOne(pedido, { as: "pedido", foreignKey: "usuario_id" });
   valoracion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(valoracion, { as: "valoraciones", foreignKey: "usuario_id" });
+  usuario.belongsTo(notificacion, { as: "usuario", foreignKey: "usuario_id" });
+  // notificacion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
+  // usuario.hasMany(notificacion, { as: "notificaciones", foreignKey: "usuario_id" });
+
+  notificacion.belongsTo(usuario, { as: "usuario", foreignKey: "usuarioId" });
+  usuario.hasMany(notificacion, {
+    as: "notificaciones",
+    foreignKey: "usuarioId",
+  });
+  notificacion.belongsTo(pedido, { as: "pedido", foreignKey: "pedidoId" });
+  pedido.hasMany(notificacion, {
+    as: "notificaciones",
+    foreignKey: "pedidoId",
+  });
+  notificacion.belongsTo(producto, {
+    as: "producto",
+    foreignKey: "productoId",
+  });
+  producto.hasMany(notificacion, {
+    as: "notificaciones",
+    foreignKey: "productoId",
+  });
+
+  // producto.belongsTo(categoria, {
+  //   as: "categoria",
+  //   foreignKey: "categoria_id",
+  // });
+  // categoria.hasMany(producto, { as: "productos", foreignKey: "categoria_id" });
+  // notificacion.hasOne(usuario, {as: "usuario", foreignKey: "usuario_id"});
+  // notificacion.hasOne(producto, {as: "producto", foreignKey: "producto_id"});
+  // notificacion.hasOne(pedido, {as: "pedido", foreignKey: "pedido_id"});
+
+  // // Define the Pedido, Producto, and Usuario models and their associations
+  // // ...
+
+  // // Define the associations for the Producto model
+  // producto.hasMany(notificacion, { foreignKey: "producto_id" });
   cupon.hasMany(pedido, { as: "pedido", foreignKey: "cupon_id" });
   pedido.belongsTo(cupon, { as: "cupon", foreignKey: "cupon_id" });
   pago.hasOne(pedido, { as: "pedido", foreignKey: "pago_id" });
@@ -142,6 +182,7 @@ export default function initModels(sequelize) {
     usuario,
     valoracion,
     favorito,
+    notificacion,
     cupon,
     pago,
   };

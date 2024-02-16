@@ -13,6 +13,7 @@ import rolResolver from "./rol.js";
 import usuarioResolver from "./usuario.js";
 import valoracionResolver from "./valoracion.js";
 import favoritoResolver from "./favorito.js";
+import notificationResolver from "./notificacion.js";
 import cuponResolver from "./cupon.js";
 
 export default [
@@ -31,5 +32,6 @@ export default [
   usuarioResolver,
   valoracionResolver,
   favoritoResolver,
+  notificationResolver
   cuponResolver,
 ];

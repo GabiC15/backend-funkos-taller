@@ -72,6 +72,38 @@ export default {
           cantidadTotal,
         }));
     },
+
+    // volumenItemsPedidos: async () => {
+    //   // Retrieve all items with their associated product titles
+    //   const items = await ItemPedido.findAll({
+    //     include: [
+    //       {
+    //         model: Producto,
+    //         as: "producto",
+    //         attributes: ["titulo"],
+    //       },
+    //     ],
+    //   });
+    
+    //   // Calculate the total quantity for each product
+    //   const itemsCount = items.reduce((acc, item) => {
+    //     const { producto_id, producto: { titulo }, cantidad } = item.dataValues;
+    //     acc[producto_id] = acc[producto_id] || { productoId: producto_id, productoTitulo: titulo, cantidadItem: 0 };
+    //     acc[producto_id].cantidadItem += cantidad;
+    //     return acc;
+    //   }, {});
+    
+    //   // Sort the items by their total quantity and format the output
+    //   const sortedItems = Object.values(itemsCount)
+    //     .sort((a, b) => b.cantidadItem - a.cantidadItem)
+    //     .map(({ productoId, productoTitulo, cantidadItem }) => ({ productoId, productoTitulo, cantidadItem }));
+    
+    //   // Calculate the total quantity of all items
+    //   const cantidadTotal = Object.values(itemsCount).reduce((total, { cantidadItem }) => total + cantidadItem, 0);
+    
+    //   // Add the total quantity to each product and return the sorted items
+    //   return sortedItems.map(item => ({ ...item, cantidadTotal }));
+    // }
   },
 
 

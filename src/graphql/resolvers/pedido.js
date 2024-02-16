@@ -118,7 +118,9 @@ export default {
           acc[month] = { month, brutto: 0, commission: 0 };
         }
         acc[month].brutto += pedido.total;
-        acc[month].commission += pedido.total - commissionCost;
+        // console.log(pedido.commission_cost)
+        // acc[month].commission += pedido.total - commissionCost;
+        acc[month].commission +=  pedido.commission_cost || (pedido.total - commissionCost);
         return acc;
       }, {});
 
