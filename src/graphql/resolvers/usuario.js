@@ -71,7 +71,7 @@ export default {
         domain: process.env.COOKIE_DOMAIN,
       });
 
-      return usuario;
+      return usuario.reload({ include: "rol" });
     },
     updateUsuario: (parent, args) =>
       Usuario.update(args.input, { where: { id: args.id } }),
