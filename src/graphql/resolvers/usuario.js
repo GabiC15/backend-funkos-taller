@@ -58,7 +58,7 @@ export default {
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
       getAuth().setCustomUserClaims(decodedToken.uid, {
         id: usuario.id,
-        rol: "CLIENT",
+        rol: "CLIENTE",
       });
       const sessionCookie = await getAuth().createSessionCookie(token, {
         expiresIn,
