@@ -29,8 +29,8 @@ export default class Pedido extends Model {
           allowNull: true,
         },
         usuarioId: {
-          field: "usuario_id",
           type: DataTypes.INTEGER,
+          field: "usuario_id",
           allowNull: true,
           references: {
             model: "usuario",
@@ -38,8 +38,8 @@ export default class Pedido extends Model {
           },
         },
         cuponId: {
-          field: "cupon_id",
           type: DataTypes.INTEGER,
+          field: "cupon_id",
           allowNull: true,
           references: {
             model: "cupon",
@@ -47,8 +47,8 @@ export default class Pedido extends Model {
           },
         },
         pagoId: {
-          field: "pago_id",
           type: DataTypes.INTEGER,
+          field: "pago_id",
           allowNull: true,
           references: {
             model: "pago",
