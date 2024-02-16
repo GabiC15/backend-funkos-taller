@@ -32,6 +32,6 @@ export default [
   usuarioResolver,
   valoracionResolver,
   favoritoResolver,
-  notificationResolver
+  notificationResolver,
   cuponResolver,
 ];

@@ -47,7 +47,7 @@ export default [
   usuarioTypes,
   valoracionTypes,
   favoritoTypes,
-  notificationTypes
+  notificationTypes,
   cuponTypes,
   pagoTypes,
 ];
