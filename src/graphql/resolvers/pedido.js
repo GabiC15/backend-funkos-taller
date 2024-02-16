@@ -43,10 +43,13 @@ export default {
       }),
     pedido: (parent, args, { req }) =>
       Pedido.findOne({
-        where: [
-          { id: args.id },
-          req.usuario.rol === "CLIENTE" ? { usuario_id: req.usuario.id } : {},
-        ],
+        where:
+          req.usuario.rol === "CLIENTE"
+            ? {
+                id: args.id,
+                usuarioId: req.usuario.id,
+              }
+            : { id: args.id },
         include: [
           "pago",
           "cupon",
