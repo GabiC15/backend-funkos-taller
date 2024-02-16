@@ -12,13 +12,43 @@ import { Op } from "sequelize";
 
 export default {
   Query: {
-    pedidos: async () => Pedido.findAll({ include: "itemsPedido" }),
+    pedidos: async (parent, args, { req }) =>
+      Pedido.findAll({
+        where:
+          req.usuario.rol === "CLIENTE"
+            ? {
+                usuarioId: req.usuario.id,
+              }
+            : {},
+        order: [["fecha", "DESC"]],
+        include: [
+          "usuario",
+          "pago",
+          "cupon",
+          {
+            model: Envio,
+            as: "envio",
+            include: "provincia",
+          },
+          {
+            model: ItemPedido,
+            as: "itemsPedido",
+            include: {
+              model: Producto,
+              as: "producto",
+              include: "imagenes",
+            },
+          },
+        ],
+      }),
     pedido: (parent, args, { req }) =>
       Pedido.findOne({
-        where: {
-          id: args.id,
-          usuarioId: req.usuario.id,
-        },
+        where: [
+          { id: args.id },
+          ...(req.usuario.rol === "CLIENTE"
+            ? [{ usuarioId: req.usuario.id }]
+            : []),
+        ],
         include: [
           "pago",
           "cupon",
@@ -199,6 +229,13 @@ export default {
           })),
           { transaction: t }
         );
+
+        await LineaCarrito.destroy({
+          where: {
+            id: lineasCarrito.map((lc) => lc.id),
+          },
+          transaction: t,
+        });
 
         return { pedido, url: data.init_point };
       });

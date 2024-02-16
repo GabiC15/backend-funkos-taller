@@ -3,8 +3,6 @@ import { getAuth } from "firebase-admin/auth";
 
 export default {
   Query: {
-    usuarios: () => Usuario.findAll(),
-    usuario: (parent, args) => Usuario.findByPk(args.id),
     totalUsuarios: () =>
       Usuario.findAndCountAll().then((result) => result.count),
 
@@ -32,7 +30,7 @@ export default {
         secure: true,
         expires: new Date(Date.now() + expiresIn),
         sameSite: "none",
-        domain: ".funkoplanet.online",
+        domain: process.env.COOKIE_DOMAIN,
       });
 
       return usuario;
@@ -40,6 +38,7 @@ export default {
     usuario: async (parent, args, { req }) => {
       const usuario = await Usuario.findOne({
         where: { id: req.usuario.id },
+        include: "rol",
       });
 
       return usuario;
@@ -69,7 +68,7 @@ export default {
         secure: true,
         expires: new Date(Date.now() + expiresIn),
         sameSite: "none",
-        domain: ".funkoplanet.online",
+        domain: process.env.COOKIE_DOMAIN,
       });
 
       return usuario;
