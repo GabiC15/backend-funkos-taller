@@ -45,7 +45,7 @@ export default {
       Pedido.findOne({
         where: [
           { id: args.id },
-          req.usuario.rol === "CLIENTE" ? { usuarioId: req.usuario.id } : {},
+          req.usuario.rol === "CLIENTE" ? { usuario_id: req.usuario.id } : {},
         ],
         include: [
           "pago",
