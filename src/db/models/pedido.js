@@ -15,19 +15,43 @@ export default class Pedido extends Model {
           type: DataTypes.DATEONLY,
           allowNull: true,
         },
-        total: {
-          type: DataTypes.REAL,
+        // total: {
+        //   type: DataTypes.REAL,
+        //   allowNull: true,
+        // },
+        preferenceId: {
+          type: DataTypes.STRING,
+          field: "preference_id",
           allowNull: true,
         },
         pagado: {
           type: DataTypes.BOOLEAN,
           allowNull: true,
         },
-        usuario_id: {
+        usuarioId: {
           type: DataTypes.INTEGER,
+          field: "usuario_id",
           allowNull: true,
           references: {
             model: "usuario",
+            key: "id",
+          },
+        },
+        cuponId: {
+          type: DataTypes.INTEGER,
+          field: "cupon_id",
+          allowNull: true,
+          references: {
+            model: "cupon",
+            key: "id",
+          },
+        },
+        pagoId: {
+          type: DataTypes.INTEGER,
+          field: "pago_id",
+          allowNull: true,
+          references: {
+            model: "pago",
             key: "id",
           },
         },

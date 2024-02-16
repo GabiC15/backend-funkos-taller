@@ -17,6 +17,9 @@ import valoracionTypes from "./valoracion.js";
 import favoritoTypes from "./favorito.js";
 import notificationTypes from "./notificacion.js";
 
+import cuponTypes from "./cupon.js";
+import pagoTypes from "./pago.js";
+
 const typeDef = gql`
   type Query {
     root: String
@@ -45,4 +48,6 @@ export default [
   valoracionTypes,
   favoritoTypes,
   notificationTypes
+  cuponTypes,
+  pagoTypes,
 ];

@@ -18,7 +18,7 @@ export default gql`
 
   extend type Query {
     usuarios: [Usuario]
-    usuario(id: Int!): Usuario
+    usuario: Usuario
     totalUsuarios: Int
     usuario: Usuario
     login: Usuario
@@ -28,6 +28,7 @@ export default gql`
     createUsuario(input: UsuarioInput!): Usuario
     updateUsuario(id: Int!, input: UsuarioInput!): Usuario
     deleteUsuario(id: Int!): Boolean
+    logout: Boolean
   }
 
   input UsuarioInput {

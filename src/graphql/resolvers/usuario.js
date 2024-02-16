@@ -3,8 +3,6 @@ import { getAuth } from "firebase-admin/auth";
 
 export default {
   Query: {
-    usuarios: () => Usuario.findAll(),
-    usuario: (parent, args) => Usuario.findByPk(args.id),
     totalUsuarios: () =>
       Usuario.findAndCountAll().then((result) => result.count),
 
@@ -16,6 +14,8 @@ export default {
         where: { auth_id: decodedToken.uid },
         include: "rol",
       });
+
+      if (!usuario) return null;
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
       getAuth().setCustomUserClaims(decodedToken.uid, {
@@ -29,13 +29,16 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
+        sameSite: "none",
+        domain: process.env.COOKIE_DOMAIN,
       });
 
       return usuario;
     },
     usuario: async (parent, args, { req }) => {
       const usuario = await Usuario.findOne({
-        where: { authId: req.usuario.uid },
+        where: { id: req.usuario.id },
+        include: "rol",
       });
 
       return usuario;
@@ -55,7 +58,7 @@ export default {
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
       getAuth().setCustomUserClaims(decodedToken.uid, {
         id: usuario.id,
-        rol: "CLIENT",
+        rol: "CLIENTE",
       });
       const sessionCookie = await getAuth().createSessionCookie(token, {
         expiresIn,
@@ -64,13 +67,20 @@ export default {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + expiresIn),
+        sameSite: "none",
+        domain: process.env.COOKIE_DOMAIN,
       });
 
-      return usuario;
+      return usuario.reload({ include: "rol" });
     },
     updateUsuario: (parent, args) =>
       Usuario.update(args.input, { where: { id: args.id } }),
     deleteUsuario: (parent, args) =>
       Usuario.destroy({ where: { id: args.id } }),
+    logout: (parent, args, { res }) => {
+      res.clearCookie("session");
+
+      return true;
+    },
   },
 };

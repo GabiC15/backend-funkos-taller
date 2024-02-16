@@ -21,19 +21,21 @@ export default class Valoracion extends Model {
         },
         cantidadEstrellas: {
           type: DataTypes.INTEGER,
-          allowNull: true,
           field: "cantidad_estrellas",
+          allowNull: true,
         },
-        producto_id: {
+        productoId: {
           type: DataTypes.INTEGER,
+          field: "producto_id",
           allowNull: true,
           references: {
             model: "producto",
             key: "id",
           },
         },
-        usuario_id: {
+        usuarioId: {
           type: DataTypes.INTEGER,
+          field: "usuario_id",
           allowNull: true,
           references: {
             model: "usuario",

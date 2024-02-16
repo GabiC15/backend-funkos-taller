@@ -16,6 +16,8 @@ import _usuario from "../models/usuario.js";
 import _valoracion from "../models/valoracion.js";
 import _favorito from "../models/favorito.js";
 import _notificacion from "../models/notificacion.js";
+import _cupon from "../models/cupon.js";
+import _pago from "../models/pago.js";
 
 export default function initModels(sequelize) {
   const carrito = _carrito.init(sequelize, DataTypes);
@@ -34,6 +36,9 @@ export default function initModels(sequelize) {
   const valoracion = _valoracion.init(sequelize, DataTypes);
   const favorito = _favorito.init(sequelize, DataTypes);
   const notificacion = _notificacion.init(sequelize, DataTypes);
+
+  const cupon = _cupon.init(sequelize, DataTypes);
+  const pago = _pago.init(sequelize, DataTypes);
 
   linea_carrito.belongsTo(carrito, { as: "carrito", foreignKey: "carrito_id" });
   carrito.hasMany(linea_carrito, {
@@ -62,9 +67,9 @@ export default function initModels(sequelize) {
   provincia.belongsTo(pais, { as: "pais", foreignKey: "pais_id" });
   pais.hasMany(provincia, { as: "provincia", foreignKey: "pais_id" });
   envio.belongsTo(pedido, { as: "pedido", foreignKey: "pedido_id" });
-  pedido.hasMany(envio, { as: "envios", foreignKey: "pedido_id" });
+  pedido.hasOne(envio, { as: "envio", foreignKey: "pedido_id" });
   item_pedido.belongsTo(pedido, { as: "pedido", foreignKey: "pedido_id" });
-  pedido.hasMany(item_pedido, { as: "item_pedidos", foreignKey: "pedido_id" });
+  pedido.hasMany(item_pedido, { as: "itemsPedido", foreignKey: "pedido_id" });
   imagen_producto.belongsTo(producto, {
     as: "producto",
     foreignKey: "producto_id",
@@ -79,7 +84,7 @@ export default function initModels(sequelize) {
     foreignKey: "producto_id",
   });
   producto.hasMany(item_pedido, {
-    as: "item_pedidos",
+    as: "itemsPedido",
     foreignKey: "producto_id",
   });
 
@@ -114,7 +119,7 @@ export default function initModels(sequelize) {
   carrito.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(carrito, { as: "carritos", foreignKey: "usuario_id" });
   pedido.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
-  usuario.hasMany(pedido, { as: "pedidos", foreignKey: "usuario_id" });
+  usuario.hasOne(pedido, { as: "pedido", foreignKey: "usuario_id" });
   valoracion.belongsTo(usuario, { as: "usuario", foreignKey: "usuario_id" });
   usuario.hasMany(valoracion, { as: "valoraciones", foreignKey: "usuario_id" });
   usuario.belongsTo(notificacion, { as: "usuario", foreignKey: "usuario_id" });
@@ -154,6 +159,12 @@ export default function initModels(sequelize) {
 
   // // Define the associations for the Producto model
   // producto.hasMany(notificacion, { foreignKey: "producto_id" });
+  cupon.hasMany(pedido, { as: "pedido", foreignKey: "cupon_id" });
+  pedido.belongsTo(cupon, { as: "cupon", foreignKey: "cupon_id" });
+  pago.hasOne(pedido, { as: "pedido", foreignKey: "pago_id" });
+  pedido.belongsTo(pago, { as: "pago", foreignKey: "pago_id" });
+  provincia.hasOne(envio, { as: "envio", foreignKey: "provincia_id" });
+  envio.belongsTo(provincia, { as: "provincia", foreignKey: "provincia_id" });
 
   return {
     carrito,
@@ -172,5 +183,7 @@ export default function initModels(sequelize) {
     valoracion,
     favorito,
     notificacion,
+    cupon,
+    pago,
   };
 }
