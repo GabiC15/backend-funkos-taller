@@ -28,6 +28,11 @@ export default class Pedido extends Model {
           type: DataTypes.BOOLEAN,
           allowNull: true,
         },
+        commissionCost: {
+          type: DataTypes.REAL,
+          field: "commission_cost",
+          allowNull: true,
+        },
         usuarioId: {
           field: "usuario_id",
           type: DataTypes.INTEGER,
