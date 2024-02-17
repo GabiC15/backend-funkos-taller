@@ -34,6 +34,10 @@ export default class Cupon extends Model {
           field: "valido_hasta",
           allowNull: false,
         },
+        estado: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true,
+        },
       },
       {
         sequelize,

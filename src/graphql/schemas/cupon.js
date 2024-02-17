@@ -7,6 +7,7 @@ export default gql`
     porcentaje: Int!
     validoDesde: String!
     validoHasta: String!
+    estado: Boolean!
   }
 
   extend type Query {
@@ -17,7 +18,7 @@ export default gql`
 
   extend type Mutation {
     createCupon(input: CuponInput!): Cupon
-    updateCupon(id: Int!, input: CuponInput!): Cupon
+    updateCupon(id: Int!, input: CuponUpdateInput!): Boolean
     deleteCupon(id: Int!): Boolean
   }
 
@@ -26,5 +27,13 @@ export default gql`
     porcentaje: Int!
     validoDesde: String!
     validoHasta: String!
+  }
+  
+  input CuponUpdateInput {
+    nombre: String
+    porcentaje: Int
+    validoDesde: String
+    validoHasta: String
+    estado: Boolean
   }
 `;
