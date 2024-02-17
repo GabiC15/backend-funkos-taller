@@ -14,7 +14,15 @@ export default {
 
   Mutation: {
     createCupon: (parent, args) => Cupon.create(args.input),
-    updateCupon: (parent, args) => Cupon.update(args.input, { where: { id: args.id } }),
+    updateCupon: async (parent, args) => {
+      try {
+        await Cupon.update(args.input, { where: { id: args.id } });
+        return true; // or some other Boolean value indicating success
+      } catch (error) {
+        console.error(error);
+        return false; // or some other Boolean value indicating failure
+      }
+    },
     deleteCupon: (parent, args) => Cupon.destroy({ where: { id: args.id } }),
   },
 };
