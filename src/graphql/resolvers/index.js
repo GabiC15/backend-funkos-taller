@@ -15,6 +15,7 @@ import valoracionResolver from "./valoracion.js";
 import favoritoResolver from "./favorito.js";
 import notificationResolver from "./notificacion.js";
 import cuponResolver from "./cupon.js";
+import caracteristicasResolver from "./caracteristica.js";
 
 export default [
   carritoResolver,
@@ -34,4 +35,5 @@ export default [
   favoritoResolver,
   notificationResolver,
   cuponResolver,
+  caracteristicasResolver,
 ];

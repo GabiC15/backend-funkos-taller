@@ -24,6 +24,7 @@ export default {
           order,
           categoriaId,
           subcategoriaId,
+          caracteristicaId,
           precioMaximo,
           precioMinimo,
         },
@@ -38,6 +39,9 @@ export default {
           ...(subcategoriaId ? [{ categoria_id: subcategoriaId }] : []),
           ...(precioMinimo ? [{ precio: { [Op.gte]: precioMinimo } }] : []),
           ...(precioMaximo ? [{ precio: { [Op.lte]: precioMaximo } }] : []),
+          ...(caracteristicaId
+            ? [{ caracteristica_id: caracteristicaId }]
+            : []),
         ],
         include: [
           {
@@ -57,6 +61,7 @@ export default {
     producto: async (_, args) => {
       return Producto.findByPk(args.id, {
         include: [
+          "caracteristica",
           {
             model: Categoria,
             as: "categoria",
