@@ -44,7 +44,7 @@ paymentsRouter.post("/payments/", async (req, res) => {
         {
           id: pedido.id,
           nombre: pedido?.usuario.nombres,
-          subtotal: pagoDb.monto - (pedido?.envio.costo ?? 0),
+          subtotal: pagoDb.monto - (pedido?.envio?.costo ?? 0),
           envio: pedido?.envio.costo ?? 0,
           total: pagoDb.monto,
           reply_to: pedido.usuario.email,
