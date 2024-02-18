@@ -8,6 +8,7 @@ export default gql`
     precio: Float
     stock: Int
     categoria: Categoria
+    caracteristica: Caracteristica
     imagenes: [ImagenProducto]
   }
 
@@ -40,5 +41,6 @@ export default gql`
     precioMinimo: Float
     categoriaId: Int
     subcategoriaId: Int
+    caracteristicaId: Int
   }
 `;

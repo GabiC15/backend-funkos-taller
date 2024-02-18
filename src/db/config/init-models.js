@@ -18,6 +18,7 @@ import _favorito from "../models/favorito.js";
 import _notificacion from "../models/notificacion.js";
 import _cupon from "../models/cupon.js";
 import _pago from "../models/pago.js";
+import _caracteristica from "../models/caracteristica.js";
 
 export default function initModels(sequelize) {
   const carrito = _carrito.init(sequelize, DataTypes);
@@ -36,7 +37,7 @@ export default function initModels(sequelize) {
   const valoracion = _valoracion.init(sequelize, DataTypes);
   const favorito = _favorito.init(sequelize, DataTypes);
   const notificacion = _notificacion.init(sequelize, DataTypes);
-
+  const caracteristica = _caracteristica.init(sequelize, DataTypes);
   const cupon = _cupon.init(sequelize, DataTypes);
   const pago = _pago.init(sequelize, DataTypes);
 
@@ -60,6 +61,14 @@ export default function initModels(sequelize) {
     foreignKey: "categoria_id",
   });
   categoria.hasMany(producto, { as: "productos", foreignKey: "categoria_id" });
+  producto.belongsTo(caracteristica, {
+    as: "caracteristica",
+    foreignKey: "caracteristica_id",
+  });
+  caracteristica.hasOne(producto, {
+    as: "producto",
+    foreignKey: "caracteristica_id",
+  });
   usuario.belongsTo(ciudad, { as: "ciudad", foreignKey: "ciudad_id" });
   ciudad.hasMany(usuario, { as: "usuarios", foreignKey: "ciudad_id" });
   // pedido.belongsTo(envio, { as: "envio", foreignKey: "envio_id" });
