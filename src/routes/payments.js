@@ -3,6 +3,7 @@ import { Payment } from "mercadopago";
 import client from "../services/mercadopago.js";
 import Pago from "../db/models/pago.js";
 import Pedido from "../db/models/pedido.js";
+import emailjs from "@emailjs/nodejs";
 
 const paymentsRouter = Router();
 
@@ -28,10 +29,32 @@ paymentsRouter.post("/payments/", async (req, res) => {
     },
   });
 
-  const pedido = await Pedido.findByPk(pagoData.external_reference);
+  const pedido = await Pedido.findByPk(pagoData.external_reference, {
+    include: ["envio", "usuario"],
+  });
   await pedido.update({
     pagoId: pagoDb.id,
   });
+
+  if (pagoData.status === "approved" && process.env.NODE_ENV === "production")
+    emailjs
+      .send(
+        "service_m30ktuu",
+        "template_aonanzp",
+        {
+          id: pedido.id,
+          nombre: pedido?.usuario.nombres,
+          subtotal: pagoDb.monto - (pedido?.envio.costo ?? 0),
+          envio: pedido?.envio.costo ?? 0,
+          total: pagoDb.monto,
+          reply_to: pedido.usuario.email,
+        },
+        {
+          publicKey: process.env.EMAILJS_PUBLIC_KEY,
+          privateKey: process.env.EMAILJS_PRIVATE_KEY,
+        }
+      )
+      .catch(console.log);
 
   res.sendStatus(200);
 });

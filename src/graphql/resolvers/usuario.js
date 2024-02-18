@@ -1,3 +1,4 @@
+import emailjs from "@emailjs/nodejs";
 import Usuario from "./../../db/models/usuario.js";
 import { getAuth } from "firebase-admin/auth";
 
@@ -70,6 +71,22 @@ export default {
         sameSite: "none",
         domain: process.env.COOKIE_DOMAIN,
       });
+
+      if (process.env.NODE_ENV === "production")
+        emailjs
+          .send(
+            "service_m30ktuu",
+            "template_asnk3r9",
+            {
+              nombre: usuario.nombres,
+              reply_to: usuario.email,
+            },
+            {
+              publicKey: process.env.EMAILJS_PUBLIC_KEY,
+              privateKey: process.env.EMAILJS_PRIVATE_KEY,
+            }
+          )
+          .catch(console.log);
 
       return usuario.reload({ include: "rol" });
     },
