@@ -42,12 +42,12 @@ paymentsRouter.post("/payments/", async (req, res) => {
         "service_m30ktuu",
         "template_aonanzp",
         {
+          to: pedido.usuario.email,
           id: pedido.id,
           nombre: pedido?.usuario.nombres,
           subtotal: pagoDb.monto - (pedido?.envio?.costo ?? 0),
           envio: pedido?.envio?.costo ?? 0,
           total: pagoDb.monto,
-          reply_to: pedido.usuario.email,
         },
         {
           publicKey: process.env.EMAILJS_PUBLIC_KEY,

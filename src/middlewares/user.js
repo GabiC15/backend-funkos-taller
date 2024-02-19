@@ -1,14 +1,15 @@
 import { getAuth } from "firebase-admin/auth";
+import jwt from "jsonwebtoken";
 
 const userMiddleware = async (req, _, next) => {
   const { session } = req.cookies || req.headers;
 
   if (session) {
-    const decodedCookie = await getAuth().verifySessionCookie(session);
+    const decodedCookie = jwt.verify(session, process.env.JWT_SECRET);
 
     req.usuario = {
       id: decodedCookie.id,
-      uid: decodedCookie.uid,
+      uid: decodedCookie.user_id,
       rol: decodedCookie.rol,
     };
   }
