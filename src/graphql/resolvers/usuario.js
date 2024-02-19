@@ -1,6 +1,7 @@
 import emailjs from "@emailjs/nodejs";
 import Usuario from "./../../db/models/usuario.js";
 import { getAuth } from "firebase-admin/auth";
+import jwt from "jsonwebtoken";
 
 export default {
   Query: {
@@ -19,13 +20,21 @@ export default {
       if (!usuario) return null;
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
-      getAuth().setCustomUserClaims(decodedToken.uid, {
-        id: usuario.id,
-        rol: usuario.rol.nombre,
-      });
-      const sessionCookie = await getAuth().createSessionCookie(token, {
-        expiresIn,
-      });
+      // await getAuth().setCustomUserClaims(decodedToken.uid, {
+      //   id: usuario.id,
+      //   rol: usuario.rol.nombre,
+      // });
+      // const sessionCookie = await getAuth().createSessionCookie(token, {
+      //   expiresIn,
+      // });
+      const sessionCookie = jwt.sign(
+        {
+          user_id: decodedToken.uid,
+          id: usuario.id,
+          rol: usuario.rol.nombre,
+        },
+        process.env.JWT_SECRET
+      );
       res.cookie("session", sessionCookie, {
         httpOnly: true,
         secure: true,
@@ -57,13 +66,18 @@ export default {
       });
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
-      getAuth().setCustomUserClaims(decodedToken.uid, {
-        id: usuario.id,
-        rol: "CLIENTE",
-      });
-      const sessionCookie = await getAuth().createSessionCookie(token, {
-        expiresIn,
-      });
+      // await getAuth().setCustomUserClaims(decodedToken.uid, {
+      //   id: usuario.id,
+      //   rol: "CLIENTE",
+      // });
+      // const sessionCookie = await getAuth().createSessionCookie(token, {
+      //   expiresIn,
+      // });
+      const sessionCookie = jwt.sign(
+        { id: usuario.id, rol: "CLIENTE", user_id: decodedToken.uid },
+        process.env.JWT_SECRET
+      );
+
       res.cookie("session", sessionCookie, {
         httpOnly: true,
         secure: true,
@@ -78,8 +92,8 @@ export default {
             "service_m30ktuu",
             "template_asnk3r9",
             {
+              to: usuario.email,
               nombre: usuario.nombres,
-              reply_to: usuario.email,
             },
             {
               publicKey: process.env.EMAILJS_PUBLIC_KEY,

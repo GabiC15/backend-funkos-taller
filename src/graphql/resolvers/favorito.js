@@ -7,7 +7,7 @@ export default {
     favoritos: (parent, args, { req }) =>
       Favorito.findAll({
         where: {
-          usuarioId: req.usuario.id,
+          usuario_id: req.usuario.id,
         },
         include: [
           "usuario",
@@ -24,8 +24,8 @@ export default {
     favorito: (parent, args, { req }) =>
       Favorito.findOne({
         where: {
-          productoId: args.productoId,
-          usuarioId: req.usuario.id,
+          producto_id: args.productoId,
+          usuario_id: req.usuario.id,
         },
       }),
   },
@@ -38,7 +38,7 @@ export default {
       }),
     deleteFavorito: (parent, args, { req }) =>
       Favorito.destroy({
-        where: { productoId: args.productoId, usuarioId: req.usuario.id },
+        where: { producto_id: args.productoId, usuario_id: req.usuario.id },
       }),
   },
 };

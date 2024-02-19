@@ -5,7 +5,7 @@ export default {
   Query: {
     lineasCarrito: (parent, args, { req }) =>
       LineaCarrito.findAll({
-        where: { carritoId: req.usuario.id },
+        where: { carrito_id: req.usuario.id },
         include: {
           model: Producto,
           as: "producto",
@@ -14,7 +14,7 @@ export default {
       }),
     lineaCarrito: (parent, args, { req }) =>
       LineaCarrito.findOne({
-        where: { carritoId: req.usuario.id, productoId: args.productoId },
+        where: { carrito_id: req.usuario.id, producto_id: args.productoId },
         include: "producto",
       }),
   },
@@ -26,11 +26,11 @@ export default {
       LineaCarrito.update(args.input, { where: { id: args.id } }),
     deleteLineaCarrito: (parent, args, { req }) =>
       LineaCarrito.destroy({
-        where: { carritoId: req.usuario.id, productoId: args.productoId },
+        where: { carrito_id: req.usuario.id, producto_id: args.productoId },
       }),
     deleteLineasCarrito: (parent, args, { req }) =>
       LineaCarrito.destroy({
-        where: { carritoId: req.usuario.id },
+        where: { carrito_id: req.usuario.id },
       }),
   },
 };
