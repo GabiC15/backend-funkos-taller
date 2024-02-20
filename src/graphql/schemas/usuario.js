@@ -26,7 +26,7 @@ export default gql`
 
   extend type Mutation {
     createUsuario(input: UsuarioInput!): Usuario
-    updateUsuario(id: Int!, input: UsuarioInput!): Usuario
+    updateUsuario(input: UsuarioInput!): [Int]
     deleteUsuario(id: Int!): Boolean
     logout: Boolean
   }

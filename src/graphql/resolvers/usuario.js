@@ -90,8 +90,8 @@ export default {
 
       return usuario.reload({ include: "rol" });
     },
-    updateUsuario: (parent, args) =>
-      Usuario.update(args.input, { where: { id: args.id } }),
+    updateUsuario: (parent, args, { req }) =>
+      Usuario.update(args.input, { where: { id: req.usuario.id } }),
     deleteUsuario: (parent, args) =>
       Usuario.destroy({ where: { id: args.id } }),
     logout: (parent, args, { res }) => {
