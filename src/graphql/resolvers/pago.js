@@ -1,7 +1,6 @@
 import Pago from "../../db/models/pago.js";
 import { Op } from "sequelize";
 
-
 // query GET_PAGOS {
 //   pagos {
 //     id
@@ -12,11 +11,17 @@ import { Op } from "sequelize";
 //   }
 // }
 
-
 export default {
   Query: {
     pago: (parent, args) => Pago.findByPk(args.id),
-    pagos: () => Pago.findAll(),
+    pagosUltimoAnio: (parent, args) => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 1);
+
+      return Pago.findAll({
+        where: [{ fecha_aprobacion: { [Op.gte]: date } }],
+      });
+    },
     totalPagosPorMes: async (_, { year }) => {
       const pagos = await Pago.findAll({
         where: {
@@ -36,7 +41,7 @@ export default {
         acc[month].brutto += pago.monto;
         // console.log(pedido.commission_cost)
         // acc[month].commission += pedido.total - commissionCost;
-        acc[month].netto +=  pago.montoPercibido;
+        acc[month].netto += pago.montoPercibido;
         return acc;
       }, {});
 

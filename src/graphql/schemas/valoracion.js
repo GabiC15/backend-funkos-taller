@@ -13,6 +13,7 @@ export default gql`
   extend type Query {
     valoraciones(productoId: Int): [Valoracion]
     valoracion(productoId: Int!): Valoracion
+    promedioValoraciones(productoId: Int!): Int
   }
 
   extend type Mutation {
