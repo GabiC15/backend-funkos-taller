@@ -16,7 +16,7 @@ paymentsRouter.post("/payments/", async (req, res) => {
 
   const [pagoDb] = await Pago.findOrCreate({
     where: {
-      mpId: pagoData.id,
+      mp_id: pagoData.id,
     },
     defaults: {
       mpId: pagoData.id,

@@ -146,7 +146,7 @@ export default {
       const { pedido, url } = await sequelize.transaction(async (t) => {
         const lineasCarrito = await LineaCarrito.findAll({
           where: {
-            carritoId: req.usuario.id,
+            carrito_id: req.usuario.id,
           },
           include: "producto",
           transaction: t,
