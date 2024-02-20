@@ -14,7 +14,7 @@ const userMiddleware = async (req, res, next) => {
         rol: decodedCookie.rol,
       };
     } catch (e) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
   }
 
