@@ -1,4 +1,5 @@
 import Envio from "./../../db/models/envio.js";
+import Provincia from "./../../db/models/provincia.js";
 import Pedido from "./../../db/models/pedido.js";
 import Usuario from "./../../db/models/usuario.js";
 import { getPrecioEnvio } from "../../utils/get-precio-envio.js";
@@ -9,7 +10,7 @@ export default {
     envio: (parent, args) => Envio.findByPk(args.id, { include: "pedido" }),
     controlDeEnvios: () =>
       Envio.findAll({
-        attributes: ["id", "entregado", "costo"],
+        attributes: ["id", "entregado", "costo", "direccion"],
         include: [
           {
             model: Pedido,
@@ -22,9 +23,15 @@ export default {
                 attributes: ["id", "nombres", "apellidos", "email"],
               },
             ],
-            order: [["fecha", "ASC"]],
+            // order: [["fecha", "ASC"]],
+          },
+          {
+            model: Provincia,
+            as: "provincia",
+            attributes: ["nombre"],
           },
         ],
+        order: [[{ model: Pedido, as: "pedido" }, "fecha", "DESC"]],
       }),
     precioEnvio: async (parent, args) => {
       const { codigoPostalDestino, provinciaIdDestino } = args.input;

@@ -17,6 +17,8 @@ export default gql`
     id: Int
     costo: Float
     entregado: Boolean
+    direccion: String
+    provincia: Provincia
     fecha: Date
     usuarioId: Int
     pedido: Pedido
