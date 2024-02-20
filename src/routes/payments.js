@@ -32,7 +32,7 @@ paymentsRouter.post("/payments/", async (req, res) => {
   const pedido = await Pedido.findByPk(pagoData.external_reference, {
     include: ["envio", "usuario"],
   });
-  await pedido.update({
+  await pedido?.update({
     pagoId: pagoDb.id,
   });
 

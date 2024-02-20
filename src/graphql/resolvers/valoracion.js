@@ -14,6 +14,19 @@ export default {
           productoId: args.productoId,
         },
       }),
+    promedioValoraciones: async (parent, args) => {
+      const valoraciones = await Valoracion.findAll({
+        where: {
+          productoId: args.productoId,
+        },
+      });
+
+      return (
+        valoraciones
+          .map((v) => v.cantidadEstrellas)
+          .reduce((acc, cur) => acc + cur) / valoraciones.length
+      );
+    },
   },
 
   Mutation: {

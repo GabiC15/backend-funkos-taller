@@ -26,6 +26,7 @@ export default gql`
   extend type Query {
     pago(id: Int!): Pago
     pagos: [Pago]
+    pagosUltimoAnio: [Pago]
     totalPagosPorMes(year: Int!): [PagosPorMes]
     totalPagosPorAnio(input: PagosPorAnioInput!): [PagosPorAnio]
   }
