@@ -120,7 +120,8 @@ export default {
         acc[month].brutto += pedido.total;
         // console.log(pedido.commission_cost)
         // acc[month].commission += pedido.total - commissionCost;
-        acc[month].commission +=  pedido.commission_cost || (pedido.total - commissionCost);
+        acc[month].commission +=
+          pedido.commission_cost || pedido.total - commissionCost;
         return acc;
       }, {});
 
@@ -146,7 +147,7 @@ export default {
       const { pedido, url } = await sequelize.transaction(async (t) => {
         const lineasCarrito = await LineaCarrito.findAll({
           where: {
-            carritoId: req.usuario.id,
+            carrito_id: req.usuario.id,
           },
           include: "producto",
           transaction: t,

@@ -20,13 +20,6 @@ export default {
       if (!usuario) return null;
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
-      // await getAuth().setCustomUserClaims(decodedToken.uid, {
-      //   id: usuario.id,
-      //   rol: usuario.rol.nombre,
-      // });
-      // const sessionCookie = await getAuth().createSessionCookie(token, {
-      //   expiresIn,
-      // });
       const sessionCookie = jwt.sign(
         {
           user_id: decodedToken.uid,
@@ -66,13 +59,6 @@ export default {
       });
 
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
-      // await getAuth().setCustomUserClaims(decodedToken.uid, {
-      //   id: usuario.id,
-      //   rol: "CLIENTE",
-      // });
-      // const sessionCookie = await getAuth().createSessionCookie(token, {
-      //   expiresIn,
-      // });
       const sessionCookie = jwt.sign(
         { id: usuario.id, rol: "CLIENTE", user_id: decodedToken.uid },
         process.env.JWT_SECRET

@@ -2,7 +2,7 @@ import { getAuth } from "firebase-admin/auth";
 import jwt from "jsonwebtoken";
 
 const userMiddleware = async (req, res, next) => {
-  const { session } = req.cookies || req.headers;
+  const { session } = req.cookies;
 
   if (session) {
     try {
