@@ -27,6 +27,7 @@ export default {
           caracteristicaId,
           precioMaximo,
           precioMinimo,
+          estado,
         },
       }
     ) => {
@@ -42,6 +43,7 @@ export default {
           ...(caracteristicaId
             ? [{ caracteristica_id: caracteristicaId }]
             : []),
+          ...(estado !== undefined ? [{ estado: estado }] : []),
         ],
         include: [
           {
