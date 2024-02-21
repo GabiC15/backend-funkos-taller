@@ -46,6 +46,20 @@ export default {
 
       return usuario;
     },
+    usuarios: async (parent, args) =>
+      Usuario.findAll({
+        where: args.rolId !== undefined ? { rol_id: args.rolId } : {},
+        include: "rol",
+      }),
+    usuarioFb: async (parent, args) => {
+      const usuario = await getAuth().getUser(args.uid);
+
+      return {
+        uid: usuario.uid,
+        email: usuario.email,
+        disabled: usuario.disabled,
+      };
+    },
   },
 
   Mutation: {
@@ -92,6 +106,18 @@ export default {
     },
     updateUsuario: (parent, args, { req }) =>
       Usuario.update(args.input, { where: { id: req.usuario.id } }),
+    updateFbUsuario: async (parent, args) => {
+      try {
+        await getAuth().updateUser(args.uid, {
+          disabled: args.input.disabled,
+        });
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+
+      return true;
+    },
     deleteUsuario: (parent, args) =>
       Usuario.destroy({ where: { id: args.id } }),
     logout: (parent, args, { res }) => {
