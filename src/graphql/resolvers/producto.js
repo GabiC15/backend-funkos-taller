@@ -87,8 +87,15 @@ export default {
 
   Mutation: {
     createProducto: (parent, args) => Producto.create(args.input),
-    updateProducto: (parent, args) =>
-      Producto.update(args.input, { where: { id: args.id } }),
+    updateProducto: async (parent, args) => {
+      try {
+        await Producto.update(args.input, { where: { id: args.id } });
+        return true; // or some other Boolean value indicating success
+      } catch (error) {
+        console.error(error);
+        return false; // or some other Boolean value indicating failure
+      }
+    },
     deleteProducto: (parent, args) =>
       Producto.destroy({ where: { id: args.id } }),
   },
