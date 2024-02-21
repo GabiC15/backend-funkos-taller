@@ -8,6 +8,7 @@ export default {
   Query: {
     notificaciones: () =>
       Notificacion.findAll({
+        limit: 25,
         include: [
           {
             model: Usuario,

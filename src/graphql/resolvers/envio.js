@@ -10,6 +10,7 @@ export default {
     envio: (parent, args) => Envio.findByPk(args.id, { include: "pedido" }),
     controlDeEnvios: () =>
       Envio.findAll({
+        limit: 30,
         attributes: ["id", "entregado", "costo", "direccion"],
         include: [
           {
