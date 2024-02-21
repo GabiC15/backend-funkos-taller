@@ -20,7 +20,7 @@ export default {
     totalCarrito: async (parent, args, { req }) => {
       const lineasCarrito = await LineaCarrito.findAll({
         where: {
-          carritoId: req.usuario.id,
+          carrito_id: req.usuario.id,
         },
         include: "producto",
       });

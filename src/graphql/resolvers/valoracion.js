@@ -11,13 +11,13 @@ export default {
     valoracion: (parent, args) =>
       Valoracion.findOne({
         where: {
-          productoId: args.productoId,
+          producto_id: args.productoId,
         },
       }),
     promedioValoraciones: async (parent, args) => {
       const valoraciones = await Valoracion.findAll({
         where: {
-          productoId: args.productoId,
+          producto_id: args.productoId,
         },
       });
 
