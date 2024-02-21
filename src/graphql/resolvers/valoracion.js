@@ -12,6 +12,7 @@ export default {
       Valoracion.findOne({
         where: {
           producto_id: args.productoId,
+          usuario_id: args.usuarioId,
         },
       }),
     promedioValoraciones: async (parent, args) => {
