@@ -20,7 +20,7 @@ export default gql`
 
   extend type Mutation {
     createProducto(input: ProductoInput!): Producto
-    updateProducto(id: Int!, input: ProductoInput!): Producto
+    updateProducto(id: Int!, input: ProductoInput!): Boolean
     deleteProducto(id: Int!): Boolean
   }
 
@@ -30,6 +30,7 @@ export default gql`
     precio: Float
     stock: Int
     categoriaId: Int
+    caracteristicaId: Int
   }
 
   input ProductoQueryInput {

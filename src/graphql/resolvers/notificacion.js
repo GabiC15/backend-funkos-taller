@@ -26,6 +26,7 @@ export default {
             attributes: ["id", "titulo", "descripcion", "precio", "stock"],
           },
         ],
+        order: [["id", "DESC"]],
       }),
     notificacion: (parent, args) => Notificacion.findByPk(args.id),
     totalNotificaciones: () =>

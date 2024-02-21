@@ -15,6 +15,7 @@ export default gql`
   extend type Mutation {
     createImagenProducto(input: ImagenProductoInput!): ImagenProducto
     updateImagenProducto(id: Int!, input: ImagenProductoInput!): ImagenProducto
+    updateImagenProductoByPath(productoId: Int!, path: String!, input: ImagenProductoUpdateInput!): Boolean
     deleteImagenProducto(id: Int!): Boolean
   }
 
@@ -22,4 +23,9 @@ export default gql`
     path: String
     producto_id: Int
   }
+
+  input ImagenProductoUpdateInput {
+    path: String
+  }
+
 `;
