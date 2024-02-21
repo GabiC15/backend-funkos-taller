@@ -10,15 +10,23 @@ export default gql`
     email: String
     password: String
     fechaNacimiento: Date
+    authId: String
     dni: String
     ciudad: Ciudad
     rol: Rol
     carrito: Carrito
   }
 
+  type UsuarioFb {
+    uid: String!
+    email: String!
+    disabled: Boolean!
+  }
+
   extend type Query {
-    usuarios: [Usuario]
+    usuarios(rolId: Int): [Usuario]
     usuario: Usuario
+    usuarioFb(uid: String!): UsuarioFb
     totalUsuarios: Int
     usuario: Usuario
     login: Usuario
@@ -27,8 +35,13 @@ export default gql`
   extend type Mutation {
     createUsuario(input: UsuarioInput!): Usuario
     updateUsuario(input: UsuarioInput!): [Int]
+    updateFbUsuario(uid: String!, input: UsuarioFbInput!): Boolean
     deleteUsuario(id: Int!): Boolean
     logout: Boolean
+  }
+
+  input UsuarioFbInput {
+    disabled: Boolean
   }
 
   input UsuarioInput {
