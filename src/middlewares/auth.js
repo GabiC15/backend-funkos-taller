@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
   const queryName = obj.definitions[0].selectionSet.selections[0].name.value;
   const operationRol = operationsRoles[queryName];
 
-  if (queryName === "__schema") return next();
+  if (!operationRol || queryName === "__schema") return next();
   if (operationRol && operationRol[0] === "ALL") return next();
   if (!operationRol?.includes(rol)) {
     return res.sendStatus(401);
