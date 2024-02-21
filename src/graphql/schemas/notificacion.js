@@ -22,6 +22,11 @@ export default gql`
     deleteNotificacion(id: Int!): Boolean
   }
 
+  # input NotificacionQueryInput {
+  #   limite: Int = 20
+  # }
+
+
   input NotificacionInput {
     fecha: String
     mensaje: String

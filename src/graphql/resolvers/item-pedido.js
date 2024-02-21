@@ -39,6 +39,7 @@ export default {
     },
     volumenItemsPedidos: async () => {
       const items = await ItemPedido.findAll({
+        limit: 25,
         include: [
           {
             model: Producto,

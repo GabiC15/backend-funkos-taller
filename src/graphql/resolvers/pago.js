@@ -14,41 +14,46 @@ import { Op } from "sequelize";
 export default {
   Query: {
     pago: (parent, args) => Pago.findByPk(args.id),
-    pagosUltimoAnio: (parent, args) => {
+    totalPagosPorMes: async (parent, args) => {
       const date = new Date();
+      date.setMonth(date.getMonth() + 1);
+      const actualDate = new Date();
+      actualDate.setMonth(date.getMonth())
+      const passedDate = new Date();
+      passedDate.setFullYear(date.getFullYear());
+      passedDate.setMonth(date.getMonth() - 11);
       date.setFullYear(date.getFullYear() - 1);
+      const actualDateFormat = `${actualDate.getFullYear()}-${actualDate.getMonth() < 10 ? `0${actualDate.getMonth()}` : actualDate.getMonth()}-${actualDate.getDate() < 10 ? `0${actualDate.getDate()}` : actualDate.getDate()}`;
+      const passedDateFormat = `${passedDate.getFullYear()}-${passedDate.getMonth() < 10? `0${passedDate.getMonth()}` : passedDate.getMonth()}-01`;
 
-      return Pago.findAll({
-        where: [{ fecha_aprobacion: { [Op.gte]: date } }],
-      });
-    },
-    totalPagosPorMes: async (_, { year }) => {
       const pagos = await Pago.findAll({
         where: {
           fechaAprobacion: {
-            [Op.between]: [`${year}-01-01`, `${year}-12-31`],
+            [Op.between]: [
+              passedDateFormat,
+              actualDateFormat,
+            ],
           },
           status: "approved",
         },
         order: [["fechaAprobacion", "ASC"]],
       });
-
       const pagosPorMes = pagos.reduce((acc, pago) => {
         const month = pago.dataValues.fechaAprobacion.split("-")[1];
+        const year = pago.dataValues.fechaAprobacion.split("-")[0];
         if (!acc[month]) {
-          acc[month] = { month, brutto: 0, netto: 0 };
+          acc[month] = { month, year, brutto: 0, netto: 0 };
         }
         acc[month].brutto += pago.monto;
-        // console.log(pedido.commission_cost)
-        // acc[month].commission += pedido.total - commissionCost;
         acc[month].netto += pago.montoPercibido;
+
         return acc;
       }, {});
 
       return Object.entries(pagosPorMes)
         .sort((a, b) => {
           return (
-            new Date(`${year}-${a[0]}-01`) - new Date(`${year}-${b[0]}-01`)
+            new Date(`${b[1]}-${b[0]}-01`) - new Date(`${a[1]}-${a[0]}-01`) 
           );
         })
         .map(([month, { brutto, netto }]) => ({
@@ -59,11 +64,17 @@ export default {
     },
     totalPagosPorAnio: async (parent, args) => {
       // const years = [];
-      const { startYear, endYear } = args.input;
+      // const { startYear, endYear } = args.input;
+      const date = new Date();
+      const startYear = date.getFullYear() - 5;
+      const endYear = date.getFullYear();
+      date.setMonth(date.getMonth() + 1);
+      const endDate = `${date.getFullYear()}-${date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
+
       const pagos = await Pago.findAll({
         where: {
           fechaAprobacion: {
-            [Op.between]: [`${startYear}-01-01`, `${endYear}-12-31`],
+            [Op.between]: [`${startYear}-01-01`, `${endDate}`],
           },
         },
         order: [["fechaAprobacion", "ASC"]],
