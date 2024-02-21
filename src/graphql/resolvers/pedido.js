@@ -17,7 +17,7 @@ export default {
         where:
           req.usuario.rol === "CLIENTE"
             ? {
-                usuarioId: req.usuario.id,
+                usuario_id: req.usuario.id,
               }
             : {},
         order: [["fecha", "DESC"]],
@@ -50,6 +50,7 @@ export default {
         include: [
           "pago",
           "cupon",
+          "usuario",
           {
             model: Envio,
             as: "envio",
