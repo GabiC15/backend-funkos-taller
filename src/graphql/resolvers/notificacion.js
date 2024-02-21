@@ -1,8 +1,8 @@
 import Notificacion from "./../../db/models/notificacion.js";
-import { Op } from "sequelize";
 import Pedido from "../../db/models/pedido.js";
 import Producto from "../../db/models/producto.js";
 import Usuario from "../../db/models/usuario.js";
+import Cupon from "../../db/models/cupon.js";
 
 export default {
   Query: {
@@ -25,6 +25,11 @@ export default {
             model: Producto,
             as: "producto",
             attributes: ["id", "titulo", "descripcion", "precio", "stock"],
+          },
+          {
+            model: Cupon,
+            as: "cupon",
+            attributes: ["id"],
           },
         ],
         order: [["id", "DESC"]],
