@@ -12,7 +12,7 @@ export default gql`
 
   extend type Query {
     valoraciones(productoId: Int): [Valoracion]
-    valoracion(productoId: Int!): Valoracion
+    valoracion(productoId: Int!, usuarioId: Int!): Valoracion
     promedioValoraciones(productoId: Int!): Int
   }
 
