@@ -22,7 +22,7 @@ export default {
         },
       });
 
-      return (
+      return Math.ceil(
         valoraciones
           .map((v) => v.cantidadEstrellas)
           .reduce((acc, cur) => acc + cur) / valoraciones.length
