@@ -20,7 +20,7 @@ export default class Notificacion extends Model {
           allowNull: true,
         },
         usuarioId: {
-          field: 'usuario_id',
+          field: "usuario_id",
           type: DataTypes.INTEGER,
           allowNull: true,
           references: {
@@ -29,7 +29,7 @@ export default class Notificacion extends Model {
           },
         },
         pedidoId: {
-          field: 'pedido_id',
+          field: "pedido_id",
           type: DataTypes.INTEGER,
           allowNull: true,
           references: {
@@ -38,11 +38,20 @@ export default class Notificacion extends Model {
           },
         },
         productoId: {
-          field: 'producto_id',
+          field: "producto_id",
           type: DataTypes.INTEGER,
           allowNull: true,
           references: {
             model: "producto",
+            key: "id",
+          },
+        },
+        cuponId: {
+          field: "cupon_id",
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: "cupon",
             key: "id",
           },
         },

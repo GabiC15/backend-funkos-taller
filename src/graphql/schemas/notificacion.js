@@ -8,6 +8,7 @@ export default gql`
     usuario: Usuario
     pedido: Pedido
     producto: Producto
+    cupon: Cupon
   }
 
   extend type Query {
@@ -26,7 +27,6 @@ export default gql`
   #   limite: Int = 20
   # }
 
-
   input NotificacionInput {
     fecha: String
     mensaje: String
@@ -34,6 +34,4 @@ export default gql`
     pedidoId: Int
     productoId: Int
   }
-
 `;
-

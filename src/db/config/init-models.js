@@ -149,6 +149,14 @@ export default function initModels(sequelize) {
     as: "notificaciones",
     foreignKey: "productoId",
   });
+  notificacion.belongsTo(cupon, {
+    as: "cupon",
+    foreignKey: "cuponId",
+  });
+  cupon.hasMany(notificacion, {
+    as: "notificaciones",
+    foreignKey: "cuponId",
+  });
 
   // producto.belongsTo(categoria, {
   //   as: "categoria",
