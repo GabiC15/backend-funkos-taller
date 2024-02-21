@@ -10,6 +10,7 @@ export default gql`
     categoria: Categoria
     caracteristica: Caracteristica
     imagenes: [ImagenProducto]
+    estado: Boolean!
   }
 
   extend type Query {
@@ -31,6 +32,7 @@ export default gql`
     stock: Int
     categoriaId: Int
     caracteristicaId: Int
+    estado: Boolean
   }
 
   input ProductoQueryInput {
@@ -43,5 +45,6 @@ export default gql`
     categoriaId: Int
     subcategoriaId: Int
     caracteristicaId: Int
+    estado: Boolean
   }
 `;

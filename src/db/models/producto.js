@@ -45,6 +45,10 @@ export default class Producto extends Model {
             key: "id",
           },
         },
+        estado: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true,
+        },
       },
       {
         sequelize,
