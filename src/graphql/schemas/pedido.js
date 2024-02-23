@@ -6,6 +6,7 @@ export default gql`
     fecha: String
     total: Float
     pagado: Boolean
+    despachado: Boolean
     usuario: Usuario
     envio: Envio
     pago: Pago
@@ -18,35 +19,24 @@ export default gql`
     checkoutUrl: String!
   }
 
-#   type YearlySales {
-#   year: String
-#   total: Int
-# }
-
-#   type MonthlySales {
-#     month: String
-#     brutto: Int
-#     commission: Int
-#   }
-
   extend type Query {
     pedidos: [Pedido]
     pedido(id: Int!): Pedido
     totalPedidosPagos: Int
-    # totalVentasPorAnio(input: VentasPorAnioInput!): [YearlySales]
-    # totalVentasPorMes(year: Int): [MonthlySales]
     totalPedidos: Int
   }
 
   extend type Mutation {
     createPedido(input: PedidoInput!): PedidoCreateResponse
-    updatePedido(id: Int!, input: PedidoInput!): Pedido
+    updatePedido(id: Int!, input: PedidoInput!): Boolean
     deletePedido(id: Int!): Boolean
   }
 
   input PedidoInput {
     envio: EnvioPedidoInput
     cuponId: Int
+    despachado: Boolean
+    fecha: String
   }
 
   input EnvioPedidoInput {
@@ -57,11 +47,6 @@ export default gql`
     numero: Int!
     piso: Int
   }
-
-  # input VentasPorAnioInput {
-  #   startYear: Int!
-  #   endYear: Int!
-  # }
 
 `;
 
