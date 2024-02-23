@@ -55,6 +55,10 @@ export default class Pedido extends Model {
             key: "id",
           },
         },
+        despachado: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true,
+        },
       },
       {
         sequelize,
