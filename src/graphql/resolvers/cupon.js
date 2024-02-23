@@ -2,25 +2,15 @@ import Cupon from "../../db/models/cupon.js";
 
 export default {
   Query: {
-    cupones: () => Cupon.findAll(),
+    cupones: () => Cupon.findAll({ where: { estado: true } }),
     cupon: (parent, args) => Cupon.findByPk(args.id),
-    // cuponPorNombre: (parent, args) =>
-    //   Cupon.findOne({
-    //     where: {
-    //       nombre: args.nombre,
-    //     },
-    //   }),
     cuponPorNombre: async (parent, args) => {
       const date = new Date();
       date.setMonth(date.getMonth() + 1);
-      // console.log(
-      //   `${date.getFullYear()}-${
-      //     date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
-      //   }-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`
-      // );
       const cupon = await Cupon.findOne({
         where: {
           nombre: args.nombre,
+          estado: true,
         },
       });
       const validoDesde = cupon.dataValues.validoDesde;
