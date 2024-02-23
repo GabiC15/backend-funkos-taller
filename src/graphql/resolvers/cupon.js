@@ -25,7 +25,9 @@ export default {
       });
       const validoDesde = cupon.dataValues.validoDesde;
       const validoHasta = cupon.dataValues.validoHasta;
-      const actualDate = date;
+      const actualDate = `${date.getFullYear()}-${
+        date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+      }-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
       if (
         new Date(validoDesde).getTime() <= new Date(actualDate).getTime() &&
         new Date(actualDate) <= new Date(validoHasta).getTime()
