@@ -4,12 +4,37 @@ export default {
   Query: {
     cupones: () => Cupon.findAll(),
     cupon: (parent, args) => Cupon.findByPk(args.id),
-    cuponPorNombre: (parent, args) =>
-      Cupon.findOne({
+    // cuponPorNombre: (parent, args) =>
+    //   Cupon.findOne({
+    //     where: {
+    //       nombre: args.nombre,
+    //     },
+    //   }),
+    cuponPorNombre: async (parent, args) => {
+      const date = new Date();
+      date.setMonth(date.getMonth() + 1);
+      console.log(
+        `${date.getFullYear()}-${
+          date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+        }-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`
+      );
+      const cupon = await Cupon.findOne({
         where: {
           nombre: args.nombre,
         },
-      }),
+      });
+      console.log(cupon.dataValues.validoDesde, cupon.dataValues.validoHasta);
+      const validoDesde = cupon.dataValues.validoDesde;
+      const validoHasta = cupon.dataValues.validoHasta;
+      const actualDate = date;
+      if (
+        new Date(validoDesde).getTime() <= new Date(actualDate).getTime() &&
+        new Date(actualDate) <= new Date(validoHasta).getTime()
+      ) {
+        return cupon;
+      }
+      return null;
+    },
   },
 
   Mutation: {
